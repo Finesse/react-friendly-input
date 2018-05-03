@@ -37,6 +37,12 @@
 		}return target;
 	};
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+		return typeof obj;
+	} : function (obj) {
+		return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+	};
+
 	var _createClass = function () {
 		function defineProperties(target, props) {
 			for (var i = 0; i < props.length; i++) {
@@ -78,8 +84,6 @@
   * All the given props are passed to the given input React component. If you need to get a reference to the React
   * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
   *
-  * @todo Teach to handle inputRef value created by React.createRef(). Or just don't ref the underlying input.
-  *
   * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
   *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
   * @return {Function} The friendly React component
@@ -109,14 +113,14 @@
 				_this.input = null;
 				_this.isFocused = false;
 
-				_this.inputRef = _this.inputRef.bind(_this);
+				_this.receiveInput = _this.receiveInput.bind(_this);
 				_this.handleFocus = _this.handleFocus.bind(_this);
 				_this.handleBlur = _this.handleBlur.bind(_this);
 				return _this;
 			}
 
 			/**
-    * Handles an underlying input reference from React/
+    * Handles an underlying input reference from React.
     *
     * @protected
     * @param {HTMLElement|null} input
@@ -133,10 +137,10 @@
     */
 
 			_createClass(_class, [{
-				key: 'inputRef',
-				value: function inputRef(input) {
+				key: 'receiveInput',
+				value: function receiveInput(input) {
 					this.input = input;
-					this.giveInputToParent();
+					this.sendInputToParent();
 				}
 
 				/**
@@ -146,10 +150,16 @@
      */
 
 			}, {
-				key: 'giveInputToParent',
-				value: function giveInputToParent() {
-					if (isFunction(this.props.inputRef)) {
-						this.props.inputRef(this.input);
+				key: 'sendInputToParent',
+				value: function sendInputToParent() {
+					var inputRef = this.props.inputRef;
+
+					// Ref can have different types: https://reactjs.org/docs/refs-and-the-dom.html
+
+					if (isFunction(inputRef)) {
+						inputRef(this.input);
+					} else if (inputRef && (typeof inputRef === 'undefined' ? 'undefined' : _typeof(inputRef)) === 'object' && inputRef.hasOwnProperty('current')) {
+						inputRef.current = this.input;
 					}
 				}
 
@@ -210,7 +220,7 @@
 					    props = _objectWithoutProperties(_props3, ['value', 'defaultValue', 'inputRef']);
 
 					return (0, _react.createElement)(Input, _extends({}, props, {
-						ref: this.inputRef,
+						ref: this.receiveInput,
 						onFocus: this.handleFocus,
 						onBlur: this.handleBlur
 					}));
@@ -252,8 +262,9 @@
 						this.input.value = this.props.value;
 					}
 
+					// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
 					if (prevProps.inputRef !== this.props.inputRef) {
-						this.giveInputToParent();
+						this.sendInputToParent();
 					}
 				}
 			}]);

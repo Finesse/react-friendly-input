@@ -5,6 +5,8 @@
  */
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -23,8 +25,6 @@ import { Component, createElement } from 'react';
  *
  * All the given props are passed to the given input React component. If you need to get a reference to the React
  * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
- *
- * @todo Teach to handle inputRef value created by React.createRef(). Or just don't ref the underlying input.
  *
  * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
  *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
@@ -57,14 +57,14 @@ export default function reactFriendlyInput(Input) {
 			_this.isFocused = false;
 
 
-			_this.inputRef = _this.inputRef.bind(_this);
+			_this.receiveInput = _this.receiveInput.bind(_this);
 			_this.handleFocus = _this.handleFocus.bind(_this);
 			_this.handleBlur = _this.handleBlur.bind(_this);
 			return _this;
 		}
 
 		/**
-   * Handles an underlying input reference from React/
+   * Handles an underlying input reference from React.
    *
    * @protected
    * @param {HTMLElement|null} input
@@ -83,10 +83,10 @@ export default function reactFriendlyInput(Input) {
 
 
 		_createClass(_class, [{
-			key: 'inputRef',
-			value: function inputRef(input) {
+			key: 'receiveInput',
+			value: function receiveInput(input) {
 				this.input = input;
-				this.giveInputToParent();
+				this.sendInputToParent();
 			}
 
 			/**
@@ -96,10 +96,16 @@ export default function reactFriendlyInput(Input) {
     */
 
 		}, {
-			key: 'giveInputToParent',
-			value: function giveInputToParent() {
-				if (isFunction(this.props.inputRef)) {
-					this.props.inputRef(this.input);
+			key: 'sendInputToParent',
+			value: function sendInputToParent() {
+				var inputRef = this.props.inputRef;
+
+				// Ref can have different types: https://reactjs.org/docs/refs-and-the-dom.html
+
+				if (isFunction(inputRef)) {
+					inputRef(this.input);
+				} else if (inputRef && (typeof inputRef === 'undefined' ? 'undefined' : _typeof(inputRef)) === 'object' && inputRef.hasOwnProperty('current')) {
+					inputRef.current = this.input;
 				}
 			}
 
@@ -160,7 +166,7 @@ export default function reactFriendlyInput(Input) {
 				    props = _objectWithoutProperties(_props3, ['value', 'defaultValue', 'inputRef']);
 
 				return createElement(Input, _extends({}, props, {
-					ref: this.inputRef,
+					ref: this.receiveInput,
 					onFocus: this.handleFocus,
 					onBlur: this.handleBlur
 				}));
@@ -202,8 +208,9 @@ export default function reactFriendlyInput(Input) {
 					this.input.value = this.props.value;
 				}
 
+				// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
 				if (prevProps.inputRef !== this.props.inputRef) {
-					this.giveInputToParent();
+					this.sendInputToParent();
 				}
 			}
 		}]);

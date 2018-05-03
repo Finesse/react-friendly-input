@@ -164,7 +164,7 @@ describe('Tests reactFriendlyInput', () => {
 				expect(input.value).to.equal('abcdef');
 			});
 
-			it('provides a ref to the wrapped component', () => {
+			it('provides a ref to the wrapped component (callback)', () => {
 				let refInput;
 				window.ReactDOM.render(
 					window.React.createElement(window.reactFriendlyInput.Input, {
@@ -188,6 +188,20 @@ describe('Tests reactFriendlyInput', () => {
 				);
 				expect(refInput2).to.be.ok;
 				expect(refInput2).to.equal(domInput);
+			});
+
+			it('provides a ref to the wrapped component (React.createRef)', function () {
+				// createRef appeared in React 16.3 https://reactjs.org/blog/2018/03/29/react-v-16-3.html#createref-api
+				if (window.React.version.split('.').slice(0, 2).join('.') < 16.3) {
+					this.skip();
+					return;
+				}
+
+				const ref = window.React.createRef();
+				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'checkbox', inputRef: ref}), view);
+				const domInput = view.firstElementChild;
+				expect(ref.current).to.be.ok;
+				expect(ref.current).to.equal(domInput);
 			});
 
 			it('provides built-in components', () => {
