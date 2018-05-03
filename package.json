@@ -6,7 +6,7 @@
   "module": "dist/friendly-input.es.js",
   "scripts": {
     "build": "node build.js",
-    "test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/runner.html"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -39,9 +39,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
+    "jsdom": "^11.10.0",
     "mocha": "^5.1.1",
-    "mocha-phantomjs-core": "^2.1.2",
-    "phantomjs-prebuilt": "^2.1.16",
     "uglify-es": "^3.3.9"
   }
 }
