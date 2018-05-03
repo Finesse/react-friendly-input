@@ -47,6 +47,12 @@
 		};
 	}();
 
+	function _objectWithoutProperties(obj, keys) {
+		var target = {};for (var i in obj) {
+			if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+		}return target;
+	}
+
 	function _classCallCheck(instance, Constructor) {
 		if (!(instance instanceof Constructor)) {
 			throw new TypeError("Cannot call a class as a function");
@@ -69,13 +75,20 @@
   * Turns an input React component into a friendly input React component. A friendly input value can't be changed from
   * a parent when a user interacts with the input.
   *
+  * All the given props are passed to the given input React component. If you need to get a reference to the React
+  * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
+  *
   * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
   *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
   * @return {Function} The friendly React component
   */
 	function reactFriendlyInput(Input) {
-		var FriendlyInput = function (_Component) {
-			_inherits(FriendlyInput, _Component);
+		var _class, _temp;
+
+		var name = Input instanceof Object ? Input.displayName || Input.name : Input;
+
+		return _temp = _class = function (_Component) {
+			_inherits(_class, _Component);
 
 			/**
     * {@inheritDoc}
@@ -86,10 +99,10 @@
     * @protected
     * @type {HTMLElement|null}
     */
-			function FriendlyInput(props) {
-				_classCallCheck(this, FriendlyInput);
+			function _class(props) {
+				_classCallCheck(this, _class);
 
-				var _this = _possibleConstructorReturn(this, (FriendlyInput.__proto__ || Object.getPrototypeOf(FriendlyInput)).call(this, props));
+				var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
 				_this.input = null;
 				_this.isFocused = false;
@@ -113,13 +126,17 @@
     * @type {boolean}
     */
 
-			_createClass(FriendlyInput, [{
+			/**
+    * {@inheritDoc}
+    */
+
+			_createClass(_class, [{
 				key: 'inputRef',
 				value: function inputRef(input) {
 					this.input = input;
 
-					if (this.forwardedRef instanceof Function) {
-						this.forwardedRef(input);
+					if (this.props.inputRef instanceof Function) {
+						this.props.inputRef(input);
 					}
 				}
 
@@ -173,9 +190,13 @@
 			}, {
 				key: 'render',
 				value: function render() {
-					return (0, _react.createElement)(Input, _extends({}, this.props, {
-						value: undefined,
-						defaultValue: undefined,
+					var _props3 = this.props,
+					    value = _props3.value,
+					    defaultValue = _props3.defaultValue,
+					    inputRef = _props3.inputRef,
+					    props = _objectWithoutProperties(_props3, ['value', 'defaultValue', 'inputRef']);
+
+					return (0, _react.createElement)(Input, _extends({}, props, {
 						ref: this.inputRef,
 						onFocus: this.handleFocus,
 						onBlur: this.handleBlur
@@ -220,40 +241,28 @@
 				}
 			}]);
 
-			return FriendlyInput;
-		}(_react.Component);
-
-		function refForwarder(props, ref) {
-			return (0, _react.createElement)(FriendlyInput, _extends({}, props, {
-				forwardedRef: ref
-			}));
-		}
-
-		// Give this component a more helpful display name in DevTools, e.g. "ForwardRef(friendlyInput(Input))"
-		var name = Input instanceof Object ? Input.displayName || Input.name : Input;
-		refForwarder.displayName = 'reactFriendlyInput(' + name + ')';
-
-		return (0, _react.forwardRef)(refForwarder);
+			return _class;
+		}(_react.Component), _class.displayName = 'reactFriendlyInput(' + name + ')', _temp;
 	}
 
 	/**
   * Friendly <input> React component
-  * @see friendlyInput What is "friendly"
+  * @see reactFriendlyInput What is "friendly"
   * @type {Function}
   */
-	var Input = exports.Input = friendlyInput('input');
+	var Input = exports.Input = reactFriendlyInput('input');
 
 	/**
   * Friendly <textarea> React component
-  * @see friendlyInput What is "friendly"
+  * @see reactFriendlyInput What is "friendly"
   * @type {Function}
   */
-	var TextArea = exports.TextArea = friendlyInput('textarea');
+	var TextArea = exports.TextArea = reactFriendlyInput('textarea');
 
 	/**
   * Friendly <select> React component
-  * @see friendlyInput What is "friendly"
+  * @see reactFriendlyInput What is "friendly"
   * @type {Function}
   */
-	var Select = exports.Select = friendlyInput('select');
+	var Select = exports.Select = reactFriendlyInput('select');
 });

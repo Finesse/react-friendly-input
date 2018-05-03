@@ -1,8 +1,11 @@
-import {Component, createElement, forwardRef} from 'react';
+import {Component, createElement} from 'react';
 
 /**
  * Turns an input React component into a friendly input React component. A friendly input value can't be changed from
  * a parent when a user interacts with the input.
+ *
+ * All the given props are passed to the given input React component. If you need to get a reference to the React
+ * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
  *
  * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
  *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
@@ -10,8 +13,15 @@ import {Component, createElement, forwardRef} from 'react';
  */
 export default function reactFriendlyInput(Input)
 {
-	class FriendlyInput extends Component
+	const name = Input instanceof Object ? Input.displayName || Input.name : Input;
+
+	return class extends Component
 	{
+		/**
+		 * {@inheritDoc}
+		 */
+		static displayName = `reactFriendlyInput(${name})`;
+
 		/**
 		 * The underlying controlled input
 		 * @protected
@@ -48,8 +58,8 @@ export default function reactFriendlyInput(Input)
 		{
 			this.input = input;
 
-			if (this.forwardedRef instanceof Function) {
-				this.forwardedRef(input);
+			if (this.props.inputRef instanceof Function) {
+				this.props.inputRef(input);
 			}
 		}
 
@@ -93,10 +103,10 @@ export default function reactFriendlyInput(Input)
 		 */
 		render()
 		{
+			const {value, defaultValue, inputRef, ...props} = this.props;
+
 			return createElement(Input, {
-				...this.props,
-				value: undefined,
-				defaultValue: undefined,
+				...props,
 				ref: this.inputRef,
 				onFocus: this.handleFocus,
 				onBlur: this.handleBlur
@@ -135,40 +145,26 @@ export default function reactFriendlyInput(Input)
 				this.input.value = this.props.value;
 			}
 		}
-	}
-
-	function refForwarder(props, ref)
-	{
-		return createElement(FriendlyInput, {
-			...props,
-			forwardedRef: ref
-		});
-	}
-
-	// Give this component a more helpful display name in DevTools, e.g. "ForwardRef(friendlyInput(Input))"
-	const name = Input instanceof Object ? Input.displayName || Input.name : Input;
-	refForwarder.displayName = `reactFriendlyInput(${name})`;
-
-	return forwardRef(refForwarder);
+	};
 }
 
 /**
  * Friendly <input> React component
- * @see friendlyInput What is "friendly"
+ * @see reactFriendlyInput What is "friendly"
  * @type {Function}
  */
-export const Input = friendlyInput('input');
+export const Input = reactFriendlyInput('input');
 
 /**
  * Friendly <textarea> React component
- * @see friendlyInput What is "friendly"
+ * @see reactFriendlyInput What is "friendly"
  * @type {Function}
  */
-export const TextArea = friendlyInput('textarea');
+export const TextArea = reactFriendlyInput('textarea');
 
 /**
  * Friendly <select> React component
- * @see friendlyInput What is "friendly"
+ * @see reactFriendlyInput What is "friendly"
  * @type {Function}
  */
-export const Select = friendlyInput('select');
+export const Select = reactFriendlyInput('select');

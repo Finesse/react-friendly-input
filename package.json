@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/FinesseRus/react-friendly-input",
   "peerDependencies": {
-    "react": "*"
+    "react": ">=0.14 <17"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
