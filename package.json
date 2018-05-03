@@ -1,0 +1,42 @@
+{
+  "name": "react-friendly-input",
+  "version": "0.0.0",
+  "description": "React higher-order component to make a not disturbing input field",
+  "main": "dist/friendly-input.umd.js",
+  "module": "dist/friendly-input.es.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FinesseRus/react-friendly-input.git"
+  },
+  "keywords": [
+    "react",
+    "higher-order component",
+    "input",
+    "don't disturb",
+    "ui",
+    "usability"
+  ],
+  "author": {
+    "name": "Surgie Finesse",
+    "email": "finesserus@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FinesseRus/react-friendly-input/issues"
+  },
+  "homepage": "https://github.com/FinesseRus/react-friendly-input",
+  "peerDependencies": {
+    "react": "*"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "uglify-es": "^3.3.9"
+  }
+}
