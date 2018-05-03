@@ -15,7 +15,7 @@ const {version, author, homepage} = require('./package.json');
 `;
 
 	// Building the full code with ES5 syntax and ES6 import/export
-	let {code} = await promisify(babel.transformFile)('./src/react-friendly-input.js', {
+	let {code} = await promisify(babel.transformFile)('./src/reactFriendlyInput.js', {
 		presets: [
 			['env', {
 				targets: {
