@@ -24,6 +24,8 @@ import { Component, createElement } from 'react';
  * All the given props are passed to the given input React component. If you need to get a reference to the React
  * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
  *
+ * @todo Teach to handle inputRef value created by React.createRef(). Or just don't ref the underlying input.
+ *
  * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
  *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
  * @return {Function} The friendly React component
@@ -84,9 +86,20 @@ export default function reactFriendlyInput(Input) {
 			key: 'inputRef',
 			value: function inputRef(input) {
 				this.input = input;
+				this.giveInputToParent();
+			}
 
-				if (this.props.inputRef instanceof Function) {
-					this.props.inputRef(input);
+			/**
+    * Sends the input ref to the parent (if it requires ref)
+    *
+    * @protected
+    */
+
+		}, {
+			key: 'giveInputToParent',
+			value: function giveInputToParent() {
+				if (isFunction(this.props.inputRef)) {
+					this.props.inputRef(this.input);
 				}
 			}
 
@@ -102,7 +115,7 @@ export default function reactFriendlyInput(Input) {
 			value: function handleFocus() {
 				this.isFocused = true;
 
-				if (this.props.onFocus instanceof Function) {
+				if (isFunction(this.props.onFocus)) {
 					var _props;
 
 					(_props = this.props).onFocus.apply(_props, arguments);
@@ -121,7 +134,7 @@ export default function reactFriendlyInput(Input) {
 			value: function handleBlur() {
 				this.isFocused = false;
 
-				if (this.props.onBlur instanceof Function) {
+				if (isFunction(this.props.onBlur)) {
 					var _props2;
 
 					(_props2 = this.props).onBlur.apply(_props2, arguments);
@@ -188,6 +201,10 @@ export default function reactFriendlyInput(Input) {
 				if (prevProps.value !== this.props.value && this.props.value !== undefined) {
 					this.input.value = this.props.value;
 				}
+
+				if (prevProps.inputRef !== this.props.inputRef) {
+					this.giveInputToParent();
+				}
 			}
 		}]);
 
@@ -215,3 +232,13 @@ export var TextArea = reactFriendlyInput('textarea');
  * @type {Function}
  */
 export var Select = reactFriendlyInput('select');
+
+/**
+ * Checks whether the value is a function
+ *
+ * @param {*} value
+ * @return {boolean}
+ */
+function isFunction(value) {
+	return typeof value === 'function';
+}
