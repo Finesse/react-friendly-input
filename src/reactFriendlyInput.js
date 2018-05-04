@@ -13,7 +13,7 @@ import {Component, createElement} from 'react';
  */
 export default function reactFriendlyInput(Input)
 {
-	const name = Input instanceof Object ? Input.displayName || Input.name : Input;
+	const name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
 
 	return class extends Component
 	{
@@ -57,24 +57,7 @@ export default function reactFriendlyInput(Input)
 		receiveInput(input)
 		{
 			this.input = input;
-			this.sendInputToParent();
-		}
-
-		/**
-		 * Sends the input ref to the parent (if it requires ref)
-		 *
-		 * @protected
-		 */
-		sendInputToParent()
-		{
-			const {inputRef} = this.props;
-
-			// Ref can have different types: https://reactjs.org/docs/refs-and-the-dom.html
-			if (isFunction(inputRef)) {
-				inputRef(this.input);
-			} else if (inputRef && typeof inputRef === 'object' && inputRef.hasOwnProperty('current')) {
-				inputRef.current = this.input;
-			}
+			sendElementToRef(this.props.inputRef, input);
 		}
 
 		/**
@@ -161,7 +144,8 @@ export default function reactFriendlyInput(Input)
 
 			// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
 			if (prevProps.inputRef !== this.props.inputRef) {
-				this.sendInputToParent();
+				sendElementToRef(prevProps.inputRef, null);
+				sendElementToRef(this.props.inputRef, this.input);
 			}
 		}
 	};
@@ -197,4 +181,20 @@ export const Select = reactFriendlyInput('select');
 function isFunction(value)
 {
 	return typeof value === 'function';
+}
+
+/**
+ * Sends an element to a ref prop value.
+ *
+ * @param {*} ref The ref value. It can be empty (no ref).
+ * @param {HTMLElement|React.Element|null} element The element to send
+ * @see https://reactjs.org/docs/refs-and-the-dom.html Ref documentation
+ */
+function sendElementToRef(ref, element)
+{
+	if (isFunction(ref)) {
+		ref(element);
+	} else if (ref && typeof ref === 'object' && ref.hasOwnProperty('current')) {
+		ref.current = element;
+	}
 }

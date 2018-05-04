@@ -165,20 +165,20 @@ describe('Tests reactFriendlyInput', () => {
 			});
 
 			it('provides a ref to the wrapped component (callback)', () => {
-				let refInput;
+				let refInput1 = null;
 				window.ReactDOM.render(
 					window.React.createElement(window.reactFriendlyInput.Input, {
 						type: 'checkbox',
-						inputRef: input => refInput = input
+						inputRef: input => refInput1 = input
 					}),
 					view
 				);
 				const domInput = view.firstElementChild;
-				expect(refInput).to.be.ok;
-				expect(refInput).to.equal(domInput);
+				expect(refInput1).not.to.equal(null);
+				expect(refInput1).to.equal(domInput);
 
 				// One more time (changing the ref)
-				let refInput2;
+				let refInput2 = null;
 				window.ReactDOM.render(
 					window.React.createElement(window.reactFriendlyInput.Input, {
 						type: 'checkbox',
@@ -186,7 +186,8 @@ describe('Tests reactFriendlyInput', () => {
 					}),
 					view
 				);
-				expect(refInput2).to.be.ok;
+				expect(refInput1).to.equal(null);
+				expect(refInput2).not.to.equal(null);
 				expect(refInput2).to.equal(domInput);
 			});
 
@@ -252,10 +253,22 @@ describe('Tests reactFriendlyInput', () => {
 				let clickCount = 0, focusCount = 0, inputCount = 0, blurCount = 0;
 				window.ReactDOM.render(
 					window.React.createElement(window.reactFriendlyInput.Input, {
-						onFocus: () => ++focusCount,
-						onBlur: () => ++blurCount,
-						onInput: () => ++inputCount,
-						onClick: () => ++clickCount
+						onFocus: event => {
+							expect(event).to.have.property('type', 'focus');
+							++focusCount;
+						},
+						onBlur: event => {
+							expect(event).to.have.property('type', 'blur');
+							++blurCount;
+						},
+						onInput: event => {
+							expect(event).to.have.property('type', 'input');
+							++inputCount;
+						},
+						onClick: event => {
+							expect(event).to.have.property('type', 'click');
+							++clickCount;
+						}
 					}),
 					view
 				);
@@ -273,10 +286,7 @@ describe('Tests reactFriendlyInput', () => {
 				expect(inputCount).to.equal(0);
 				expect(blurCount).to.equal(0);
 
-				input.dispatchEvent(new window.Event('input', {
-					'bubbles': true,
-					'cancelable': true
-				}));
+				input.dispatchEvent(new window.Event('input', {bubbles: true, cancelable: true}));
 				expect(clickCount).to.equal(1);
 				expect(focusCount).to.equal(1);
 				expect(inputCount).to.equal(1);

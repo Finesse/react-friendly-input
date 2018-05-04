@@ -27,6 +27,12 @@
 	});
 	exports.Select = exports.TextArea = exports.Input = undefined;
 	exports.default = reactFriendlyInput;
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+		return typeof obj;
+	} : function (obj) {
+		return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+	};
+
 	var _extends = Object.assign || function (target) {
 		for (var i = 1; i < arguments.length; i++) {
 			var source = arguments[i];for (var key in source) {
@@ -35,12 +41,6 @@
 				}
 			}
 		}return target;
-	};
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-		return typeof obj;
-	} : function (obj) {
-		return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 	};
 
 	var _createClass = function () {
@@ -91,7 +91,7 @@
 	function reactFriendlyInput(Input) {
 		var _class, _temp;
 
-		var name = Input instanceof Object ? Input.displayName || Input.name : Input;
+		var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
 
 		return _temp = _class = function (_Component) {
 			_inherits(_class, _Component);
@@ -140,27 +140,7 @@
 				key: 'receiveInput',
 				value: function receiveInput(input) {
 					this.input = input;
-					this.sendInputToParent();
-				}
-
-				/**
-     * Sends the input ref to the parent (if it requires ref)
-     *
-     * @protected
-     */
-
-			}, {
-				key: 'sendInputToParent',
-				value: function sendInputToParent() {
-					var inputRef = this.props.inputRef;
-
-					// Ref can have different types: https://reactjs.org/docs/refs-and-the-dom.html
-
-					if (isFunction(inputRef)) {
-						inputRef(this.input);
-					} else if (inputRef && (typeof inputRef === 'undefined' ? 'undefined' : _typeof(inputRef)) === 'object' && inputRef.hasOwnProperty('current')) {
-						inputRef.current = this.input;
-					}
+					sendElementToRef(this.props.inputRef, input);
 				}
 
 				/**
@@ -264,7 +244,8 @@
 
 					// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
 					if (prevProps.inputRef !== this.props.inputRef) {
-						this.sendInputToParent();
+						sendElementToRef(prevProps.inputRef, null);
+						sendElementToRef(this.props.inputRef, this.input);
 					}
 				}
 			}]);
@@ -302,5 +283,20 @@
   */
 	function isFunction(value) {
 		return typeof value === 'function';
+	}
+
+	/**
+  * Sends an element to a ref prop value.
+  *
+  * @param {*} ref The ref value. It can be empty (no ref).
+  * @param {HTMLElement|React.Element|null} element The element to send
+  * @see https://reactjs.org/docs/refs-and-the-dom.html Ref documentation
+  */
+	function sendElementToRef(ref, element) {
+		if (isFunction(ref)) {
+			ref(element);
+		} else if (ref && (typeof ref === 'undefined' ? 'undefined' : _typeof(ref)) === 'object' && ref.hasOwnProperty('current')) {
+			ref.current = element;
+		}
 	}
 });
