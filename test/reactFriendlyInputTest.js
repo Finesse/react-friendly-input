@@ -96,75 +96,85 @@ describe('Tests reactFriendlyInput', () => {
 				expect(input.max).to.equal('3');
 			});
 
-			it('unmounts the input', () => {
+			it('unmounts an input', () => {
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text'}), view);
 				window.ReactDOM.unmountComponentAtNode(view);
 				expect(view.childNodes).to.have.lengthOf(0);
 			});
 
-			it('lets change the input value through props when the input is not focused', () => {
+			it('lets change an input value through props when the input is not focused', () => {
+				// Create an input
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', value: 'before'}), view);
 				const input = view.firstElementChild;
 				expect(input.value).to.equal('before');
 
+				// Change the input value
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', value: 'after'}), view);
 				expect(view.firstElementChild).to.equal(input);
 				expect(input.value).to.equal('after');
 			});
 
-			it('doesn\'t let change the input value and selection through props when the input is focused', () => {
-				// This is the only way to focus the input I've found (it is not a fault of jsdom)
+			it('doesn\'t let change an input value and selection through props when the input is focused', () => {
+				// Create, focus and type in an input
+				// The focus() method doesn't work if the input is not just created (it is not a fault of jsdom)
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', value: 'before focus'}), view);
 				const input = view.firstElementChild;
 				input.focus();
 				expect(input).to.equal(window.document.activeElement); // Checks that the input is focused
-
 				input.value += ' typing';
-				input.selectionStart = input.selectionEnd = 5;
-				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', value: 'while focus'}), view);
+				input.selectionStart = 5;
+				input.selectionEnd = 6;
 
+				// Change the input value
+				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', value: 'while focus'}), view);
 				expect(view.firstElementChild).to.equal(input);
 				expect(input.value).to.equal('before focus typing');
 				expect(input.selectionStart).to.equal(5);
-				expect(input.selectionEnd).to.equal(5);
+				expect(input.selectionEnd).to.equal(6);
 			});
 
 			it('applies the value, passed through props while the input was focused, on blur', () => {
+				// Create and focus an input
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', value: 'before focus'}), view);
 				const input = view.firstElementChild;
 				input.focus();
 				expect(input).to.equal(window.document.activeElement);
 
+				// Change the input value
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', value: 'while focus'}), view);
 				expect(view.firstElementChild).to.equal(input);
 				expect(input.value).to.equal('before focus');
 
+				// Blur the input
 				input.blur();
 				expect(input).not.to.equal(window.document.activeElement);
 				expect(input.value).to.equal('while focus');
 			});
 
 			it('doesn\'t change the input value in uncontrolled mode', () => {
-				window.ReactDOM.unmountComponentAtNode(view);
-
+				// Create an input
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'text', defaultValue: 'abc'}), view);
 				const input = view.firstElementChild;
 				expect(input.value).to.equal('abc');
 
+				// Type in the input
 				input.value += 'de';
 				expect(input.value).to.equal('abcde');
 
+				// Focus the input and type
 				input.focus();
 				expect(input).to.equal(window.document.activeElement);
 				input.value += 'f';
 				expect(input.value).to.equal('abcdef');
 
+				// Blur the input
 				input.blur();
 				expect(input).not.to.equal(window.document.activeElement);
 				expect(input.value).to.equal('abcdef');
 			});
 
 			it('provides a ref to the wrapped component (callback)', () => {
+				// Ref to a newly rendered element
 				let refInput1 = null;
 				window.ReactDOM.render(
 					window.React.createElement(window.reactFriendlyInput.Input, {
@@ -177,7 +187,7 @@ describe('Tests reactFriendlyInput', () => {
 				expect(refInput1).not.to.equal(null);
 				expect(refInput1).to.equal(domInput);
 
-				// One more time (changing the ref)
+				// Change the ref
 				let refInput2 = null;
 				window.ReactDOM.render(
 					window.React.createElement(window.reactFriendlyInput.Input, {
@@ -192,7 +202,7 @@ describe('Tests reactFriendlyInput', () => {
 			});
 
 			it('provides a ref to the wrapped component (React.createRef)', function () {
-				// createRef appeared in React 16.3 https://reactjs.org/blog/2018/03/29/react-v-16-3.html#createref-api
+				// createRef() appeared in React 16.3 https://reactjs.org/blog/2018/03/29/react-v-16-3.html#createref-api
 				if (window.React.version.split('.').slice(0, 2).join('.') < 16.3) {
 					this.skip();
 					return;
@@ -201,7 +211,7 @@ describe('Tests reactFriendlyInput', () => {
 				const ref = window.React.createRef();
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {type: 'checkbox', inputRef: ref}), view);
 				const domInput = view.firstElementChild;
-				expect(ref.current).to.be.ok;
+				expect(ref.current).not.to.equal(null);
 				expect(ref.current).to.equal(domInput);
 			});
 
@@ -301,7 +311,7 @@ describe('Tests reactFriendlyInput', () => {
 
 			afterEach('clean up', () => {
 				window.ReactDOM.unmountComponentAtNode(view);
-				view.innerHTML = null;
+				view.innerHTML = '';
 			});
 
 			after('destroy the DOM', () => {
