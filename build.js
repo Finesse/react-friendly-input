@@ -38,12 +38,7 @@ const {version, author, homepage} = require('./package.json');
 				}
 			}]
 		]
-	}).code.replace(/\n(\s*?)global.unknown = mod.exports;/, `
-$1var exports = mod.exports.default;
-$1for (var item in mod.exports) if (item !== 'default' && mod.exports.hasOwnProperty(item)) {
-$1	exports[item] = mod.exports[item];
-$1}
-$1global.reactFriendlyInput = exports;`); // Babel UMD transform doesn't have settings for it so I have to do it manually
+	}).code.replace(/(\sglobal\.)unknown(\s*=\s*mod\.exports;)/, `$1reactFriendlyInput$2`); // Babel UMD transform doesn't have settings for it so I have to do it manually
 	await promisify(writeFile)('./dist/react-friendly-input.umd.js', copyrightNotice + code);
 	console.log('`dist/react-friendly-input.umd.js` has been built');
 

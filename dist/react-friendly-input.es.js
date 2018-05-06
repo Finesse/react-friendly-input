@@ -30,7 +30,7 @@ import { Component, createElement } from 'react';
  *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
  * @return {Function} The friendly React component
  */
-export default function reactFriendlyInput(Input) {
+export function palInput(Input) {
 	var _class, _temp;
 
 	var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
@@ -197,29 +197,29 @@ export default function reactFriendlyInput(Input) {
 		}]);
 
 		return _class;
-	}(Component), _class.displayName = 'reactFriendlyInput(' + name + ')', _temp;
+	}(Component), _class.displayName = 'palInput(' + name + ')', _temp;
 }
 
 /**
  * Friendly <input> React component
- * @see reactFriendlyInput What is "friendly"
+ * @see palInput What is "friendly"
  * @type {Function}
  */
-export var Input = reactFriendlyInput('input');
+export var Input = palInput('input');
 
 /**
  * Friendly <textarea> React component
- * @see reactFriendlyInput What is "friendly"
+ * @see palInput What is "friendly"
  * @type {Function}
  */
-export var TextArea = reactFriendlyInput('textarea');
+export var TextArea = palInput('textarea');
 
 /**
  * Friendly <select> React component
- * @see reactFriendlyInput What is "friendly"
+ * @see palInput What is "friendly"
  * @type {Function}
  */
-export var Select = reactFriendlyInput('select');
+export var Select = palInput('select');
 
 /**
  * Checks whether the value is a function

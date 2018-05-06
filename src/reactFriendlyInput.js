@@ -11,7 +11,7 @@ import {Component, createElement} from 'react';
  *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
  * @return {Function} The friendly React component
  */
-export default function reactFriendlyInput(Input)
+export function palInput(Input)
 {
 	const name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
 
@@ -20,7 +20,7 @@ export default function reactFriendlyInput(Input)
 		/**
 		 * {@inheritDoc}
 		 */
-		static displayName = `reactFriendlyInput(${name})`;
+		static displayName = `palInput(${name})`;
 
 		/**
 		 * The underlying controlled input
@@ -153,24 +153,24 @@ export default function reactFriendlyInput(Input)
 
 /**
  * Friendly <input> React component
- * @see reactFriendlyInput What is "friendly"
+ * @see palInput What is "friendly"
  * @type {Function}
  */
-export const Input = reactFriendlyInput('input');
+export const Input = palInput('input');
 
 /**
  * Friendly <textarea> React component
- * @see reactFriendlyInput What is "friendly"
+ * @see palInput What is "friendly"
  * @type {Function}
  */
-export const TextArea = reactFriendlyInput('textarea');
+export const TextArea = palInput('textarea');
 
 /**
  * Friendly <select> React component
- * @see reactFriendlyInput What is "friendly"
+ * @see palInput What is "friendly"
  * @type {Function}
  */
-export const Select = reactFriendlyInput('select');
+export const Select = palInput('select');
 
 /**
  * Checks whether the value is a function

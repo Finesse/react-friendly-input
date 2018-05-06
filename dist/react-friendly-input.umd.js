@@ -13,11 +13,7 @@
 			exports: {}
 		};
 		factory(mod.exports, global.React);
-		var exports = mod.exports.default;
-		for (var item in mod.exports) if (item !== 'default' && mod.exports.hasOwnProperty(item)) {
-			exports[item] = mod.exports[item];
-		}
-		global.reactFriendlyInput = exports;
+		global.reactFriendlyInput = mod.exports;
 	}
 })(this, function (exports, _react) {
 	"use strict";
@@ -26,7 +22,7 @@
 		value: true
 	});
 	exports.Select = exports.TextArea = exports.Input = undefined;
-	exports.default = reactFriendlyInput;
+	exports.palInput = palInput;
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
 		return typeof obj;
 	} : function (obj) {
@@ -88,7 +84,7 @@
   *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
   * @return {Function} The friendly React component
   */
-	function reactFriendlyInput(Input) {
+	function palInput(Input) {
 		var _class, _temp;
 
 		var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
@@ -251,29 +247,29 @@
 			}]);
 
 			return _class;
-		}(_react.Component), _class.displayName = 'reactFriendlyInput(' + name + ')', _temp;
+		}(_react.Component), _class.displayName = 'palInput(' + name + ')', _temp;
 	}
 
 	/**
   * Friendly <input> React component
-  * @see reactFriendlyInput What is "friendly"
+  * @see palInput What is "friendly"
   * @type {Function}
   */
-	var Input = exports.Input = reactFriendlyInput('input');
+	var Input = exports.Input = palInput('input');
 
 	/**
   * Friendly <textarea> React component
-  * @see reactFriendlyInput What is "friendly"
+  * @see palInput What is "friendly"
   * @type {Function}
   */
-	var TextArea = exports.TextArea = reactFriendlyInput('textarea');
+	var TextArea = exports.TextArea = palInput('textarea');
 
 	/**
   * Friendly <select> React component
-  * @see reactFriendlyInput What is "friendly"
+  * @see palInput What is "friendly"
   * @type {Function}
   */
-	var Select = exports.Select = reactFriendlyInput('select');
+	var Select = exports.Select = palInput('select');
 
 	/**
   * Checks whether the value is a function

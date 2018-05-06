@@ -31,10 +31,7 @@ describe('Tests reactFriendlyInput', () => {
 
 				// You can use it to debug: https://github.com/jsdom/jsdom#virtual-consoles
 				virtualConsole = new VirtualConsole();
-				virtualConsole.on('log', (...args) => console.log(...args));
-				virtualConsole.on('error', (...args) => console.error(...args));
-				virtualConsole.on('warn', (...args) => console.warn(...args));
-				virtualConsole.on('info', (...args) => console.info(...args));
+				virtualConsole.sendTo(console);
 
 				const DOM = new JSDOM(`<!DOCTYPE html>
 				<html>
@@ -64,20 +61,20 @@ describe('Tests reactFriendlyInput', () => {
 			});
 
 			it('has loaded resources', () => {
-				expect(window.React).not.to.equal(undefined);
-				expect(window.ReactDOM).not.to.equal(undefined);
-				expect(window.reactFriendlyInput).to.be.a('function');
+				expect(window.React).to.be.ok.and.to.be.an('object');
+				expect(window.ReactDOM).to.be.ok.and.to.be.an('object');
+				expect(window.reactFriendlyInput).to.be.ok.and.to.be.an('object');
 			});
 
 			it('has correct display name', () => {
-				expect(window.reactFriendlyInput('input').displayName).to.equal('reactFriendlyInput(input)');
-				expect(window.reactFriendlyInput('select').displayName).to.equal('reactFriendlyInput(select)');
-				expect(window.reactFriendlyInput(class Foo extends window.React.Component {}).displayName).to.equal('reactFriendlyInput(Foo)');
+				expect(window.reactFriendlyInput.palInput('input').displayName).to.equal('palInput(input)');
+				expect(window.reactFriendlyInput.palInput('select').displayName).to.equal('palInput(select)');
+				expect(window.reactFriendlyInput.palInput(class Foo extends window.React.Component {}).displayName).to.equal('palInput(Foo)');
 			});
 
 			it('renders an input', () => {
 				window.ReactDOM.render(
-					window.React.createElement(window.reactFriendlyInput('input'), {
+					window.React.createElement(window.reactFriendlyInput.Input, {
 						type: 'number',
 						value: '1234',
 						min: '-1',
@@ -203,7 +200,7 @@ describe('Tests reactFriendlyInput', () => {
 
 			it('provides a ref to the wrapped component (React.createRef)', function () {
 				// createRef() appeared in React 16.3 https://reactjs.org/blog/2018/03/29/react-v-16-3.html#createref-api
-				if (window.React.version.split('.').slice(0, 2).join('.') < 16.3) {
+				if (typeof window.React.createRef !== 'function') {
 					this.skip();
 					return;
 				}
@@ -246,7 +243,7 @@ describe('Tests reactFriendlyInput', () => {
 						}));
 					}
 				}
-				const MyFriendlyComponent = window.reactFriendlyInput(MyComponent);
+				const MyFriendlyComponent = window.reactFriendlyInput.palInput(MyComponent);
 
 				let element;
 				window.ReactDOM.render(window.React.createElement(MyFriendlyComponent, {
