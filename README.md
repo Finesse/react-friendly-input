@@ -47,7 +47,7 @@ class App extends React.Component
   render() {
     return <Input
       value={this.state.name}
-      onInput={this.setName}
+      onInput={this.setName.bind(this)}
     />;
   }
 }
@@ -75,7 +75,7 @@ class App extends React.Component
   render() {
     return <reactFriendlyInput.Input
       value={this.state.name}
-      onInput={this.setName}
+      onInput={this.setName.bind(this)}
     />;
   }
 }
