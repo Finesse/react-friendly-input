@@ -5,10 +5,10 @@
 [![Build Status](https://travis-ci.org/FinesseRus/react-friendly-input.svg?branch=master)](https://travis-ci.org/FinesseRus/react-friendly-input)
 
 This is a set of [React](https://reactjs.org) from components which don't let change their value from a script when 
-focused by a user. It helps to build controlled inputs that don't annoy users.
+focused. It helps to build controlled inputs that don't annoy users.
 
 Here is a simple example. It is a React application where a user can change his/her name. A name must not start or end 
-with a space and must be not more then 10 characters long.
+with a space and must be not more then 10 characters long. The user is typing ` I am typing a text ` and pressing <kbd>Tab</kbd>.
 
 <table>
 <thead>
@@ -30,47 +30,57 @@ with a space and must be not more then 10 characters long.
 <tr>
 <td>
 
-```js
+```jsx
 class App extends React.Component
 {
   state = {
     name: ''
-  };
+  }
+  
+  setName(event) {
+    this.setState({
+      name: event.target.value
+        .trim().slice(0, 10)
+    });
+  }
   
   render() {
     return <Input
       value={this.state.name}
-      onInput={event => this.setState({
-        name: event.target.value.trim().slice(0, 10)
-      })}
+      onInput={this.setName}
     />;
   }
 }
 
-ReactDOM.render(<App />, document.body);
+ReactDOM.render(<App/>, document.body);
 ```
 
 </td>
 <td>
 
-```js
+```jsx
 class App extends React.Component
 {
   state = {
     name: ''
-  };
+  }
+  
+  setName(event) {
+    this.setState({
+      name: event.target.value
+        .trim().slice(0, 10)
+    });
+  }
   
   render() {
     return <reactFriendlyInput.Input
       value={this.state.name}
-      onInput={event => this.setState({
-        name: event.target.value.trim().slice(0, 10)
-      })}
+      onInput={this.setName}
     />;
   }
 }
 
-ReactDOM.render(<App />, document.body);
+ReactDOM.render(<App/>, document.body);
 ```
 
 </td>
@@ -142,7 +152,7 @@ const reactFriendlyInput = require('react-friendly-input');
 
 ## Usage
 
-```js
+```jsx
 const {Input, TextArea, Select} = reactFriendlyInput;
 
 ReactDOM.render(
@@ -163,7 +173,7 @@ The new value is applied as soon as the field loses the focus.
 
 A component can be uncontrolled:
 
-```js
+```jsx
 const {Input} = reactFriendlyInput;
 
 return <Input defaultValue="initial value" />;
@@ -172,7 +182,8 @@ return <Input defaultValue="initial value" />;
 ### Making a custom friendly input
 
 If you have a component that acts like a form field (has the `value` property and emits `focus` and `blur` events),
-you can use the higher-order component function to make it friendly:
+you can use the [higher-order component function](https://reactjs.org/docs/higher-order-components.html) to make it 
+friendly:
 
 ```js
 const {palInput} = reactFriendlyInput;
@@ -191,22 +202,18 @@ If you need to get a reference to the underlying element (e.g. to focus it), you
 
 First is to use the friendly input `input` property:
 
-```js
+```jsx
 const {Input} = reactFriendlyInput;
 
-return <Input
-    ref={friendlyInput => friendlyInput.input.focus()}
-/>;
+return <Input ref={friendlyInput => friendlyInput.input.focus()} />;
 ```
 
 Second is to use the `inputRef` prop:
 
-```js
+```jsx
 const {Input} = reactFriendlyInput;
 
-return <Input
-    inputRef={input => input.focus()} // String refs are not supported here
-/>;
+return <Input inputRef={input => input.focus()} />; // String refs are not supported here
 ```
 
 
