@@ -1,6 +1,6 @@
 {
   "name": "react-friendly-input",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0",
   "description": "React components to make a not interrupting input field",
   "main": "dist/friendly-input.umd.js",
   "module": "dist/friendly-input.es.js",
