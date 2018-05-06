@@ -4,11 +4,11 @@
 ![Supported React versions](https://img.shields.io/badge/React-v0.14,_v15,_v16-brightgreen.svg)
 [![Build Status](https://travis-ci.org/FinesseRus/react-friendly-input.svg?branch=master)](https://travis-ci.org/FinesseRus/react-friendly-input)
 
-This is a set of [React](https://reactjs.org) from components which don't let change their value from a script when 
-focused. It helps to build controlled inputs that don't annoy users.
+This is a set of [React](https://reactjs.org) form field components which don't change their value programmatically 
+when focused. It helps to build controlled inputs that don't annoy users.
 
 Here is a simple example. It is a React application where a user can change his/her name. A name must not start or end 
-with a space and must be not more then 10 characters long. The user is typing ` I am typing a text ` and pressing <kbd>Tab</kbd>.
+with a space and must be not more then 10 characters long. The user is typing ` I am typing a text ` and pressing <kbd>Tab</kbd>.
 
 <table>
 <thead>
@@ -157,8 +157,8 @@ const {Input, TextArea, Select} = reactFriendlyInput;
 
 ReactDOM.render(
     <div>
-        <Input value="some value" />
-        <TextArea value="big text" />
+        <Input type="text" value="some value" />
+        <TextArea value="big text" rows="4" />
         <Select value={1}>
             <option value="0">No</option>
             <option value="1">Yes</option>
@@ -167,6 +167,8 @@ ReactDOM.render(
     document.body
 );
 ```
+
+All the props are passed to the underlying DOM elements.
 
 If a field is focused, the field value doesn't change when a new value is given through the props.
 The new value is applied as soon as the field loses the focus.
