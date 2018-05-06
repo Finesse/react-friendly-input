@@ -24,8 +24,9 @@ export function palInput(Input)
 
 		/**
 		 * The underlying controlled input
-		 * @protected
-		 * @type {HTMLElement|null}
+		 * @public
+		 * @readonly
+		 * @type {HTMLElement|React.Element|null}
 		 */
 		input = null;
 

@@ -1,7 +1,7 @@
 {
   "name": "react-friendly-input",
   "version": "0.1.0-alpha.0",
-  "description": "React higher-order component to make a not disturbing input field",
+  "description": "React components to make a not interrupting input field",
   "main": "dist/friendly-input.umd.js",
   "module": "dist/friendly-input.es.js",
   "scripts": {
@@ -14,11 +14,14 @@
   },
   "keywords": [
     "react",
+    "react-component",
     "higher-order component",
     "ui",
     "usability",
     "friendly",
-    "input"
+    "input",
+    "textarea",
+    "selectf"
   ],
   "author": {
     "name": "Surgie Finesse",

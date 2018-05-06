@@ -45,8 +45,9 @@ export function palInput(Input) {
 
 		/**
    * The underlying controlled input
-   * @protected
-   * @type {HTMLElement|null}
+   * @public
+   * @readonly
+   * @type {HTMLElement|React.Element|null}
    */
 		function _class(props) {
 			_classCallCheck(this, _class);

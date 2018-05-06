@@ -170,7 +170,7 @@ describe('Tests reactFriendlyInput', () => {
 				expect(input.value).to.equal('abcdef');
 			});
 
-			it('provides a ref to the wrapped component (callback)', () => {
+			it('provides a ref to the wrapped component through callback', () => {
 				// Ref to a newly rendered element
 				let refInput1 = null;
 				window.ReactDOM.render(
@@ -198,7 +198,7 @@ describe('Tests reactFriendlyInput', () => {
 				expect(refInput2).to.equal(domInput);
 			});
 
-			it('provides a ref to the wrapped component (React.createRef)', function () {
+			it('provides a ref to the wrapped component through React.createRef()', function () {
 				// createRef() appeared in React 16.3 https://reactjs.org/blog/2018/03/29/react-v-16-3.html#createref-api
 				if (typeof window.React.createRef !== 'function') {
 					this.skip();
@@ -210,6 +210,20 @@ describe('Tests reactFriendlyInput', () => {
 				const domInput = view.firstElementChild;
 				expect(ref.current).not.to.equal(null);
 				expect(ref.current).to.equal(domInput);
+			});
+
+			it('provides a ref to the wrapped component through `input` property', () => {
+				let refInput = null;
+				window.ReactDOM.render(
+					window.React.createElement(window.reactFriendlyInput.Input, {
+						type: 'radio',
+						ref: input => refInput = input
+					}),
+					view
+				);
+				const domInput = view.firstElementChild;
+				expect(refInput.input).not.to.equal(null);
+				expect(refInput.input).to.equal(domInput);
 			});
 
 			it('provides built-in components', () => {
