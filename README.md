@@ -8,7 +8,7 @@ This is a set of [React](https://reactjs.org) form field components which don't 
 when focused. It helps to build controlled inputs that don't annoy users.
 
 Here is a simple example. It is a React application where a user can change his/her name. A name must not start or end 
-with a space and must be not more then 10 characters long. The user is typing ` I am typing a text ` and pressing <kbd>Tab</kbd>.
+with a space and must be not more than 10 characters long. The user is typing ` I am typing a text ` and pressing <kbd>Tab</kbd>.
 
 <table>
 <thead>
