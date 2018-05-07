@@ -45,7 +45,7 @@ class App extends React.Component
   }
   
   render() {
-    return <Input
+    return <input
       value={this.state.name}
       onInput={this.setName.bind(this)}
     />;
@@ -159,7 +159,7 @@ ReactDOM.render(
     <div>
         <Input type="text" value="some value" />
         <TextArea value="big text" rows="4" />
-        <Select value={1}>
+        <Select value="1">
             <option value="0">No</option>
             <option value="1">Yes</option>
         <Select>
