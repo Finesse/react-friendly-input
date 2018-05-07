@@ -320,6 +320,18 @@ describe('Tests reactFriendlyInput', () => {
 				expect(blurCount).to.equal(1);
 			});
 
+			it('renders children', () => {
+				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Select, {}, [
+					window.React.createElement('option', {value: 1}, 'Foo'),
+					window.React.createElement('option', {value: 2}, 'Bar')
+				]), view);
+				const select = view.firstElementChild;
+				expect(select.children).to.have.lengthOf(2);
+				expect(select.children[0].tagName).to.equal('OPTION');
+				expect(select.children[0].value).to.equal('1');
+				expect(select.children[0].textContent).to.equal('Foo');
+			});
+
 			afterEach('clean up', () => {
 				window.ReactDOM.unmountComponentAtNode(view);
 				view.innerHTML = '';
