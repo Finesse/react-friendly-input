@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/react-friendly-input.svg)](https://www.npmjs.com/package/react-friendly-input)
 ![Supported React versions](https://img.shields.io/badge/React-v0.14,_v15,_v16-brightgreen.svg)
-[![Build Status](https://travis-ci.org/FinesseRus/react-friendly-input.svg?branch=master)](https://travis-ci.org/FinesseRus/react-friendly-input)
+[![Build Status](https://travis-ci.org/Finesse/react-friendly-input.svg?branch=master)](https://travis-ci.org/Finesse/react-friendly-input)
 [![Gzip size](http://img.badgesize.io/http://cdn.jsdelivr.net/npm/react-friendly-input/dist/react-friendly-input.umd.min.js?compression=gzip)](http://cdn.jsdelivr.net/npm/react-friendly-input/dist/react-friendly-input.umd.min.js)
 
 This is a set of [React](https://reactjs.org) form field components which don't change their value programmatically 
@@ -89,7 +89,7 @@ ReactDOM.render(<App/>, document.body);
 </tbody>
 </table>
 
-[Demo on CodePen](https://codepen.io/TheFinesse/pen/XqRVRL?editors=0010)
+[Live demo](https://codepen.io/TheFinesse/pen/XqRVRL?editors=0010)
 
 
 ## Installation
