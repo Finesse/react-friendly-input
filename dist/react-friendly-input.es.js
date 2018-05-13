@@ -146,31 +146,16 @@ export function palInput(Input) {
 				    inputRef = _props3.inputRef,
 				    props = _objectWithoutProperties(_props3, ['value', 'defaultValue', 'inputRef']);
 
+				if (value !== undefined) {
+					defaultValue = value;
+				}
+
 				return createElement(Input, _extends({}, props, {
+					defaultValue: defaultValue,
 					ref: this.receiveInput,
 					onFocus: this.handleFocus,
 					onBlur: this.handleBlur
 				}));
-			}
-
-			/**
-    * {@inheritDoc}
-    */
-
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				if (this.isFocused) {
-					return;
-				}
-
-				var value = '';
-				if (this.props.value !== undefined) {
-					value = this.props.value;
-				} else if (this.props.defaultValue !== undefined) {
-					value = this.props.defaultValue;
-				}
-				this.input.value = value;
 			}
 
 			/**

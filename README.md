@@ -184,8 +184,13 @@ return <Input defaultValue="initial value" />;
 
 ### Making a custom friendly input
 
-If you have a component that acts like a form field (has the `value` property and emits `focus` and `blur` events),
-you can use the [higher-order component function](https://reactjs.org/docs/higher-order-components.html) to make it 
+If you have a component that acts like a form field:
+
+* Its element has a writable `value` attribute
+* Has the `defaultValue`, `onFocus` and `onBlur` props that acts the same as in the `<input>` component
+* Uncontrolled when doesn't receive the `value` prop
+
+You can use the [higher-order component](https://reactjs.org/docs/higher-order-components.html) function to make it 
 friendly:
 
 ```js

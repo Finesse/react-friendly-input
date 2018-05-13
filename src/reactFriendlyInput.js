@@ -101,32 +101,19 @@ export function palInput(Input)
 		 */
 		render()
 		{
-			const {value, defaultValue, inputRef, ...props} = this.props;
+			let {value, defaultValue, inputRef, ...props} = this.props;
+
+			if (value !== undefined) {
+				defaultValue = value;
+			}
 
 			return createElement(Input, {
 				...props,
+				defaultValue,
 				ref: this.receiveInput,
 				onFocus: this.handleFocus,
 				onBlur: this.handleBlur
 			});
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		componentDidMount()
-		{
-			if (this.isFocused) {
-				return;
-			}
-
-			let value = '';
-			if (this.props.value !== undefined) {
-				value = this.props.value;
-			} else if (this.props.defaultValue !== undefined) {
-				value = this.props.defaultValue;
-			}
-			this.input.value = value;
 		}
 
 		/**
