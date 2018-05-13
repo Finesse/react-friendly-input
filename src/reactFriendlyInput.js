@@ -50,6 +50,40 @@ export function palInput(Input)
 		}
 
 		/**
+		 * Getter for the `value` property
+		 *
+		 * @return {*|undefined}
+		 */
+		get value()
+		{
+			return this.input ? this.input.value : undefined;
+		}
+
+		/**
+		 * Setter for the `value` property
+		 *
+		 * @param {*} value A new value
+		 */
+		set value(value)
+		{
+			if (!this.isFocused) {
+				this.forceValue(value);
+			}
+		}
+
+		/**
+		 * Sets a new value despite whether the input is focused or not
+		 *
+		 * @param {*} value A new value
+		 */
+		forceValue(value)
+		{
+			if (this.input) {
+				this.input.value = value;
+			}
+		}
+
+		/**
 		 * Handles an underlying input reference from React.
 		 *
 		 * @protected
@@ -62,7 +96,7 @@ export function palInput(Input)
 		}
 
 		/**
-		 * Handles a native input `focus` event.
+		 * Handles a native input `focus` event
 		 *
 		 * @protected
 		 * @param {*[]} args
@@ -77,7 +111,7 @@ export function palInput(Input)
 		}
 
 		/**
-		 * Handles a native input `blur` event.
+		 * Handles a native input `blur` event
 		 *
 		 * @protected
 		 * @param {*[]} args
@@ -92,7 +126,7 @@ export function palInput(Input)
 
 			// If the input is controlled (has the value property), resets the native input value to the props value
 			if (this.props.value !== undefined) {
-				this.input.value = this.props.value;
+				this.forceValue(this.props.value);
 			}
 		}
 
@@ -127,7 +161,7 @@ export function palInput(Input)
 			}
 
 			if (prevProps.value !== this.props.value && this.props.value !== undefined) {
-				this.input.value = this.props.value;
+				this.forceValue(this.props.value);
 			}
 
 			// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually

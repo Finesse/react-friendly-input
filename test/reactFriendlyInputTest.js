@@ -226,7 +226,7 @@ describe('Tests reactFriendlyInput', () => {
 				expect(refInput.input).to.equal(domInput);
 			});
 
-			it('provides built-in components', () => {
+			it('provides the built-in components', () => {
 				expect(window.reactFriendlyInput.Input).to.be.a('function');
 				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input), view);
 				expect(view.firstElementChild.tagName).to.equal('INPUT');
@@ -330,6 +330,57 @@ describe('Tests reactFriendlyInput', () => {
 				expect(select.children[0].tagName).to.equal('OPTION');
 				expect(select.children[0].value).to.equal('1');
 				expect(select.children[0].textContent).to.equal('Foo');
+			});
+
+			it('returns the value through the `value` getter', () => {
+				let friendlyInput;
+				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {
+					value: 'orange',
+					ref: input => friendlyInput = input
+				}), view);
+				expect(friendlyInput.value).to.equal('orange');
+			});
+
+			it('sets a value through the `value` setter', () => {
+				let friendlyInput;
+				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {
+					value: 'apple',
+					ref: input => friendlyInput = input
+				}), view);
+				friendlyInput.value = 'banana';
+				expect(view.firstElementChild.value).to.equal('banana');
+			});
+
+			it('doesn\'t let change the input value through the `value` setter when the input is focused', () => {
+				let friendlyInput;
+				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {
+					defaultValue: 'apple',
+					ref: input => friendlyInput = input
+				}), view);
+
+				const domInput = view.firstElementChild;
+				domInput.focus();
+				friendlyInput.value = 'banana';
+				expect(domInput.value).to.equal('apple');
+
+				domInput.blur();
+				expect(domInput.value).to.equal('apple');
+			});
+
+			it('lets change the input value using the `forceValue` method when the input is focused', () => {
+				let friendlyInput;
+				window.ReactDOM.render(window.React.createElement(window.reactFriendlyInput.Input, {
+					defaultValue: 'apple',
+					ref: input => friendlyInput = input
+				}), view);
+
+				const domInput = view.firstElementChild;
+				domInput.focus();
+				friendlyInput.forceValue('banana');
+				expect(domInput.value).to.equal('banana');
+
+				domInput.blur();
+				expect(domInput.value).to.equal('banana');
 			});
 
 			afterEach('clean up', () => {

@@ -117,10 +117,9 @@
 			}
 
 			/**
-    * Handles an underlying input reference from React.
+    * Getter for the `value` property
     *
-    * @protected
-    * @param {HTMLElement|null} input
+    * @return {*|undefined}
     */
 
 			/**
@@ -134,6 +133,27 @@
     */
 
 			_createClass(_class, [{
+				key: 'forceValue',
+
+				/**
+     * Sets a new value despite whether the input is focused or not
+     *
+     * @param {*} value A new value
+     */
+				value: function forceValue(value) {
+					if (this.input) {
+						this.input.value = value;
+					}
+				}
+
+				/**
+     * Handles an underlying input reference from React.
+     *
+     * @protected
+     * @param {HTMLElement|null} input
+     */
+
+			}, {
 				key: 'receiveInput',
 				value: function receiveInput(input) {
 					this.input = input;
@@ -141,7 +161,7 @@
 				}
 
 				/**
-     * Handles a native input `focus` event.
+     * Handles a native input `focus` event
      *
      * @protected
      * @param {*[]} args
@@ -160,7 +180,7 @@
 				}
 
 				/**
-     * Handles a native input `blur` event.
+     * Handles a native input `blur` event
      *
      * @protected
      * @param {*[]} args
@@ -179,7 +199,7 @@
 
 					// If the input is controlled (has the value property), resets the native input value to the props value
 					if (this.props.value !== undefined) {
-						this.input.value = this.props.value;
+						this.forceValue(this.props.value);
 					}
 				}
 
@@ -221,13 +241,30 @@
 					}
 
 					if (prevProps.value !== this.props.value && this.props.value !== undefined) {
-						this.input.value = this.props.value;
+						this.forceValue(this.props.value);
 					}
 
 					// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
 					if (prevProps.inputRef !== this.props.inputRef) {
 						sendElementToRef(prevProps.inputRef, null);
 						sendElementToRef(this.props.inputRef, this.input);
+					}
+				}
+			}, {
+				key: 'value',
+				get: function get() {
+					return this.input ? this.input.value : undefined;
+				}
+
+				/**
+     * Setter for the `value` property
+     *
+     * @param {*} value A new value
+     */
+
+				, set: function set(value) {
+					if (!this.isFocused) {
+						this.forceValue(value);
 					}
 				}
 			}]);

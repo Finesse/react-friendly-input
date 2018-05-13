@@ -153,6 +153,8 @@ const reactFriendlyInput = require('react-friendly-input');
 
 ## Usage
 
+The components are rendered like the plain React form fields. All the props are passed to the underlying DOM elements.
+
 ```jsx
 const {Input, TextArea, Select} = reactFriendlyInput;
 
@@ -169,8 +171,6 @@ ReactDOM.render(
 );
 ```
 
-All the props are passed to the underlying DOM elements.
-
 If a field is focused, the field value doesn't change when a new value is given through the props.
 The new value is applied as soon as the field loses the focus.
 
@@ -180,6 +180,22 @@ A component can be uncontrolled:
 const {Input} = reactFriendlyInput;
 
 return <Input defaultValue="initial value" />;
+```
+
+You can change a field value using the `value` property. If the field is focused the value doesn't change.
+
+```jsx
+const {Input} = reactFriendlyInput;
+
+let input;
+ReactDOM.render(<Input defaultValue="value1" ref={i => input = i} />, document.body);
+input.value = 'value2';
+```
+
+You can set a new value despite the focus using the `forceValue` method:
+
+```jsx
+input.forceValue('value2');
 ```
 
 ### Making a custom friendly input
@@ -204,7 +220,7 @@ class CustomField extends React.Component
 const FriendlyCustomField = palInput(CustomField);
 ```
 
-### Getting an input reference
+### Getting a reference to the DOM element
 
 If you need to get a reference to the underlying element (e.g. to focus it), you have several options.
 
