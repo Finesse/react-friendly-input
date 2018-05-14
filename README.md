@@ -107,7 +107,7 @@ import.
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/react@16.3.2/umd/react.production.min.js"></script>
 
 <!-- React Friendly Input -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/react-friendly-input@0.1.0/dist/react-friendly-input.umd.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/react-friendly-input@0.1.1/dist/react-friendly-input.umd.min.js"></script>
 ```
 </details>
 
@@ -124,7 +124,7 @@ Installation:
 require.config({
     paths: {
         react: '//cdn.jsdelivr.net/npm/react@16.3.2/umd/react.production.min',
-        'react-friendly-input': '//cdn.jsdelivr.net/npm/react-friendly-input@0.1.0/dist/react-friendly-input.umd.min'
+        'react-friendly-input': '//cdn.jsdelivr.net/npm/react-friendly-input@0.1.1/dist/react-friendly-input.umd.min'
     }
 });
 
