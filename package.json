@@ -2,7 +2,7 @@
   "name": "react-friendly-input",
   "version": "0.1.2",
   "description": "React components to make a not interrupting input field",
-  "main": "dist/react-friendly-input.umd.js",
+  "main": "dist/react-friendly-input.cjs.js",
   "jsnext:main": "dist/react-friendly-input.es.js",
   "module": "dist/react-friendly-input.es.js",
   "sideEffects": false,
@@ -37,15 +37,19 @@
   "peerDependencies": {
     "react": ">=0.14 <17"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0"
+  },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.1.0",
+    "@babel/plugin-transform-modules-umd": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
     "chai": "^4.1.2",
     "jsdom": "^11.10.0",
     "mocha": "^5.1.1",
-    "uglify-es": "^3.3.9"
+    "terser": "^3.9.3"
   }
 }

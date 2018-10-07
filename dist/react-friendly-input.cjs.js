@@ -3,17 +3,38 @@
  * Copyright 2018 Surgie Finesse
  * Licensed under the MIT license
  */
-import _typeof from "@babel/runtime/helpers/typeof";
-import _objectSpread from "@babel/runtime/helpers/objectSpread";
-import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
-import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
-import _createClass from "@babel/runtime/helpers/createClass";
-import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
-import _inherits from "@babel/runtime/helpers/inherits";
-import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import { Component, createElement } from 'react';
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.palInput = palInput;
+exports.Select = exports.TextArea = exports.Input = void 0;
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
+
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = require("react");
+
 /**
  * Turns an input React component into a friendly input React component. A friendly input value can't be changed from
  * a parent when a user interacts with the input.
@@ -25,39 +46,34 @@ import { Component, createElement } from 'react';
  *   textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
  * @return {Function} The friendly React component
  */
-
-export function palInput(Input) {
+function palInput(Input) {
   var _class, _temp;
 
   var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
   return _temp = _class =
   /*#__PURE__*/
   function (_Component) {
-    _inherits(_class, _Component);
+    (0, _inherits2.default)(_class, _Component);
 
     function _class() {
       var _getPrototypeOf2;
 
       var _this;
 
-      _classCallCheck(this, _class);
+      (0, _classCallCheck2.default)(this, _class);
 
       for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
         _args[_key] = arguments[_key];
       }
 
-      _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(_class)).call.apply(_getPrototypeOf2, [this].concat(_args)));
-
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "input", null);
-
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "isFocused", false);
-
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "receiveInput", function (input) {
+      _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(_class)).call.apply(_getPrototypeOf2, [this].concat(_args)));
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "input", null);
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "isFocused", false);
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "receiveInput", function (input) {
         _this.input = input;
         sendElementToRef(_this.props.inputRef, input);
       });
-
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleFocus", function () {
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "handleFocus", function () {
         _this.isFocused = true;
 
         if (isFunction(_this.props.onFocus)) {
@@ -66,8 +82,7 @@ export function palInput(Input) {
           (_this$props = _this.props).onFocus.apply(_this$props, arguments);
         }
       });
-
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleBlur", function () {
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "handleBlur", function () {
         _this.isFocused = false;
 
         if (isFunction(_this.props.onBlur)) {
@@ -81,11 +96,10 @@ export function palInput(Input) {
           _this.forceValue(_this.props.value);
         }
       });
-
       return _this;
     }
 
-    _createClass(_class, [{
+    (0, _createClass2.default)(_class, [{
       key: "forceValue",
 
       /**
@@ -116,13 +130,13 @@ export function palInput(Input) {
             value = _this$props3.value,
             defaultValue = _this$props3.defaultValue,
             inputRef = _this$props3.inputRef,
-            props = _objectWithoutProperties(_this$props3, ["value", "defaultValue", "inputRef"]);
+            props = (0, _objectWithoutProperties2.default)(_this$props3, ["value", "defaultValue", "inputRef"]);
 
         if (value !== undefined) {
           defaultValue = value;
         }
 
-        return createElement(Input, _objectSpread({}, props, {
+        return (0, _react.createElement)(Input, (0, _objectSpread2.default)({}, props, {
           defaultValue: defaultValue,
           ref: this.receiveInput,
           onFocus: this.handleFocus,
@@ -174,9 +188,8 @@ export function palInput(Input) {
         }
       }
     }]);
-
     return _class;
-  }(Component), _defineProperty(_class, "displayName", "palInput(".concat(name, ")")), _temp;
+  }(_react.Component), (0, _defineProperty2.default)(_class, "displayName", "palInput(".concat(name, ")")), _temp;
 }
 /**
  * Friendly <input> React component
@@ -184,27 +197,32 @@ export function palInput(Input) {
  * @type {Function}
  */
 
-export var Input = palInput('input');
+
+var Input = palInput('input');
 /**
  * Friendly <textarea> React component
  * @see palInput What is "friendly"
  * @type {Function}
  */
 
-export var TextArea = palInput('textarea');
+exports.Input = Input;
+var TextArea = palInput('textarea');
 /**
  * Friendly <select> React component
  * @see palInput What is "friendly"
  * @type {Function}
  */
 
-export var Select = palInput('select');
+exports.TextArea = TextArea;
+var Select = palInput('select');
 /**
  * Checks whether the value is a function
  *
  * @param {*} value
  * @return {boolean}
  */
+
+exports.Select = Select;
 
 function isFunction(value) {
   return typeof value === 'function';
@@ -221,7 +239,7 @@ function isFunction(value) {
 function sendElementToRef(ref, element) {
   if (isFunction(ref)) {
     ref(element);
-  } else if (ref && _typeof(ref) === 'object' && ref.hasOwnProperty('current')) {
+  } else if (ref && (0, _typeof2.default)(ref) === 'object' && ref.hasOwnProperty('current')) {
     ref.current = element;
   }
 }
