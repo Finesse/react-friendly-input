@@ -5,21 +5,25 @@ const {JSDOM, VirtualConsole} = require('jsdom');
 describe('Tests reactFriendlyInput', () => {
 
   const reactVersions = {
-    0.14: {
-      reactUrl: 'https://cdn.jsdelivr.net/npm/react@0.14/dist/react.min.js',
-      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@0.14/dist/react-dom.min.js'
+    '0.14': {
+      reactUrl: 'https://cdn.jsdelivr.net/npm/react@0.14.0/dist/react.min.js',
+      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@0.14.0/dist/react-dom.min.js'
     },
-    15: {
-      reactUrl: 'https://cdn.jsdelivr.net/npm/react@15/dist/react.min.js',
-      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@15/dist/react-dom.min.js'
+    '15': {
+      reactUrl: 'https://cdn.jsdelivr.net/npm/react@15.0.0/dist/react.min.js',
+      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@15.0.0/dist/react-dom.min.js'
     },
-    16: {
+    '16': {
+      reactUrl: 'https://cdn.jsdelivr.net/npm/react@16.0.0/umd/react.production.min.js',
+      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@16.0.0/umd/react-dom.production.min.js'
+    },
+    '16 latest': {
       reactUrl: 'https://cdn.jsdelivr.net/npm/react@16/umd/react.production.min.js',
       reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.production.min.js'
     }
   };
 
-  const reactFriendlyInputCode = readFileSync(__dirname + '/../dist/react-friendly-input.umd.js');
+  const reactFriendlyInputCode = readFileSync(`${__dirname}/../dist/react-friendly-input.umd.js`);
 
   // Run each test in the browser environment with every supported React version
   for (const [version, {reactUrl, reactDomUrl}] of Object.entries(reactVersions)) {
