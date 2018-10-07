@@ -21,6 +21,7 @@ describe('Tests reactFriendlyInput', () => {
       reactUrl: 'https://cdn.jsdelivr.net/npm/react@16/umd/react.production.min.js',
       reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.production.min.js'
     }
+    // When React 17 is released: `16 latest` should be removed and `17` with `17 latest` should be added
   };
 
   const reactFriendlyInputCode = readFileSync(`${__dirname}/../dist/react-friendly-input.umd.js`);
@@ -50,6 +51,7 @@ describe('Tests reactFriendlyInput', () => {
 					</html>`, {
           resources: 'usable',
           runScripts: 'dangerously',
+          pretendToBeVisual: true,
           virtualConsole
         });
         window = DOM.window;
