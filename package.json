@@ -1,6 +1,6 @@
 {
   "name": "react-friendly-input",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "React components to make a not interrupting input field",
   "main": "dist/react-friendly-input.cjs.js",
   "jsnext:main": "dist/react-friendly-input.es.js",
