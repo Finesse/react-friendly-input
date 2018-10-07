@@ -3,7 +3,9 @@
   "version": "0.1.2",
   "description": "React components to make a not interrupting input field",
   "main": "dist/react-friendly-input.umd.js",
+  "jsnext:main": "dist/react-friendly-input.es.js",
   "module": "dist/react-friendly-input.es.js",
+  "sideEffects": false,
   "scripts": {
     "build": "node build.js",
     "test": "mocha"
