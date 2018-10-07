@@ -4,318 +4,313 @@
  * Licensed under the MIT license
  */
 (function (global, factory) {
-	if (typeof define === "function" && define.amd) {
-		define(["exports", "react"], factory);
-	} else if (typeof exports !== "undefined") {
-		factory(exports, require("react"));
-	} else {
-		var mod = {
-			exports: {}
-		};
-		factory(mod.exports, global.React);
-		global.reactFriendlyInput = mod.exports;
-	}
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "react"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("react"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.React);
+    global.reactFriendlyInput = mod.exports;
+  }
 })(this, function (exports, _react) {
-	"use strict";
+  "use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.Select = exports.TextArea = exports.Input = undefined;
-	exports.palInput = palInput;
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-		return typeof obj;
-	} : function (obj) {
-		return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-	};
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Select = exports.TextArea = exports.Input = undefined;
+  exports.palInput = palInput;
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  };
 
-	var _extends = Object.assign || function (target) {
-		for (var i = 1; i < arguments.length; i++) {
-			var source = arguments[i];for (var key in source) {
-				if (Object.prototype.hasOwnProperty.call(source, key)) {
-					target[key] = source[key];
-				}
-			}
-		}return target;
-	};
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }return target;
+  };
 
-	var _createClass = function () {
-		function defineProperties(target, props) {
-			for (var i = 0; i < props.length; i++) {
-				var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-			}
-		}return function (Constructor, protoProps, staticProps) {
-			if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-		};
-	}();
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+  }();
 
-	function _objectWithoutProperties(obj, keys) {
-		var target = {};for (var i in obj) {
-			if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-		}return target;
-	}
+  function _objectWithoutProperties(obj, keys) {
+    var target = {};for (var i in obj) {
+      if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+    }return target;
+  }
 
-	function _classCallCheck(instance, Constructor) {
-		if (!(instance instanceof Constructor)) {
-			throw new TypeError("Cannot call a class as a function");
-		}
-	}
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
-	function _possibleConstructorReturn(self, call) {
-		if (!self) {
-			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-		}return call && (typeof call === "object" || typeof call === "function") ? call : self;
-	}
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
 
-	function _inherits(subClass, superClass) {
-		if (typeof superClass !== "function" && superClass !== null) {
-			throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-		}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-	}
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
 
-	/**
-  * Turns an input React component into a friendly input React component. A friendly input value can't be changed from
-  * a parent when a user interacts with the input.
-  *
-  * All the given props are passed to the given input React component. If you need to get a reference to the React
-  * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
-  *
-  * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
-  *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
-  * @return {Function} The friendly React component
-  */
-	function palInput(Input) {
-		var _class, _temp;
+  /**
+   * Turns an input React component into a friendly input React component. A friendly input value can't be changed from
+   * a parent when a user interacts with the input.
+   *
+   * All the given props are passed to the given input React component. If you need to get a reference to the React
+   * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
+   *
+   * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
+   *   textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
+   * @return {Function} The friendly React component
+   */
+  function palInput(Input) {
+    var _class, _temp2, _initialiseProps;
 
-		var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
+    var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
 
-		return _temp = _class = function (_Component) {
-			_inherits(_class, _Component);
+    return _temp2 = _class = function (_Component) {
+      _inherits(_class, _Component);
 
-			/**
-    * {@inheritDoc}
-    */
+      function _class() {
+        var _ref;
 
-			/**
-    * The underlying controlled input
-    * @public
-    * @readonly
-    * @type {HTMLElement|React.Element|null}
-    */
-			function _class(props) {
-				_classCallCheck(this, _class);
+        var _temp, _this, _ret;
 
-				var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+        _classCallCheck(this, _class);
 
-				_this.input = null;
-				_this.isFocused = false;
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
 
-				_this.receiveInput = _this.receiveInput.bind(_this);
-				_this.handleFocus = _this.handleFocus.bind(_this);
-				_this.handleBlur = _this.handleBlur.bind(_this);
-				return _this;
-			}
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _initialiseProps.call(_this), _temp), _possibleConstructorReturn(_this, _ret);
+      }
+      /**
+       * {@inheritDoc}
+       */
 
-			/**
-    * Getter for the `value` property
-    *
-    * @return {*|undefined}
-    */
+      /**
+       * The underlying controlled input
+       * @public
+       * @readonly
+       * @type {HTMLElement|React.Element|null}
+       */
 
-			/**
-    * Is the input focused
-    * @protected
-    * @type {boolean}
-    */
+      /**
+       * Is the input focused
+       * @protected
+       * @type {boolean}
+       */
 
-			/**
-    * {@inheritDoc}
-    */
+      _createClass(_class, [{
+        key: 'forceValue',
 
-			_createClass(_class, [{
-				key: 'forceValue',
+        /**
+         * Sets a new value despite whether the input is focused or not
+         *
+         * @param {*} value A new value
+         */
+        value: function forceValue(value) {
+          if (this.input) {
+            this.input.value = value;
+          }
+        }
 
-				/**
-     * Sets a new value despite whether the input is focused or not
-     *
-     * @param {*} value A new value
-     */
-				value: function forceValue(value) {
-					if (this.input) {
-						this.input.value = value;
-					}
-				}
+        /**
+         * Handles an underlying input reference from React.
+         *
+         * @protected
+         * @param {HTMLElement|null} input
+         */
 
-				/**
-     * Handles an underlying input reference from React.
-     *
-     * @protected
-     * @param {HTMLElement|null} input
-     */
+        /**
+         * Handles a native input `focus` event
+         *
+         * @protected
+         * @param {*[]} args
+         */
 
-			}, {
-				key: 'receiveInput',
-				value: function receiveInput(input) {
-					this.input = input;
-					sendElementToRef(this.props.inputRef, input);
-				}
+        /**
+         * Handles a native input `blur` event
+         *
+         * @protected
+         * @param {*[]} args
+         */
 
-				/**
-     * Handles a native input `focus` event
-     *
-     * @protected
-     * @param {*[]} args
-     */
+      }, {
+        key: 'render',
 
-			}, {
-				key: 'handleFocus',
-				value: function handleFocus() {
-					this.isFocused = true;
+        /**
+         * {@inheritDoc}
+         */
+        value: function render() {
+          var _props = this.props,
+              value = _props.value,
+              defaultValue = _props.defaultValue,
+              inputRef = _props.inputRef,
+              props = _objectWithoutProperties(_props, ['value', 'defaultValue', 'inputRef']);
 
-					if (isFunction(this.props.onFocus)) {
-						var _props;
+          if (value !== undefined) {
+            defaultValue = value;
+          }
 
-						(_props = this.props).onFocus.apply(_props, arguments);
-					}
-				}
+          return (0, _react.createElement)(Input, _extends({}, props, {
+            defaultValue: defaultValue,
+            ref: this.receiveInput,
+            onFocus: this.handleFocus,
+            onBlur: this.handleBlur
+          }));
+        }
 
-				/**
-     * Handles a native input `blur` event
-     *
-     * @protected
-     * @param {*[]} args
-     */
+        /**
+         * {@inheritDoc}
+         */
 
-			}, {
-				key: 'handleBlur',
-				value: function handleBlur() {
-					this.isFocused = false;
+      }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+          // No value change from a parent when a user interacts with the input!
+          if (this.isFocused) {
+            return;
+          }
 
-					if (isFunction(this.props.onBlur)) {
-						var _props2;
+          if (prevProps.value !== this.props.value && this.props.value !== undefined) {
+            this.forceValue(this.props.value);
+          }
 
-						(_props2 = this.props).onBlur.apply(_props2, arguments);
-					}
+          // React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
+          if (prevProps.inputRef !== this.props.inputRef) {
+            sendElementToRef(prevProps.inputRef, null);
+            sendElementToRef(this.props.inputRef, this.input);
+          }
+        }
+      }, {
+        key: 'value',
 
-					// If the input is controlled (has the value property), resets the native input value to the props value
-					if (this.props.value !== undefined) {
-						this.forceValue(this.props.value);
-					}
-				}
+        /**
+         * Getter for the `value` property
+         *
+         * @return {*|undefined}
+         */
+        get: function get() {
+          return this.input ? this.input.value : undefined;
+        }
 
-				/**
-     * {@inheritDoc}
-     */
+        /**
+         * Setter for the `value` property
+         *
+         * @param {*} value A new value
+         */
 
-			}, {
-				key: 'render',
-				value: function render() {
-					var _props3 = this.props,
-					    value = _props3.value,
-					    defaultValue = _props3.defaultValue,
-					    inputRef = _props3.inputRef,
-					    props = _objectWithoutProperties(_props3, ['value', 'defaultValue', 'inputRef']);
+        , set: function set(value) {
+          if (!this.isFocused) {
+            this.forceValue(value);
+          }
+        }
+      }]);
 
-					if (value !== undefined) {
-						defaultValue = value;
-					}
+      return _class;
+    }(_react.Component), _class.displayName = 'palInput(' + name + ')', _initialiseProps = function _initialiseProps() {
+      var _this2 = this;
 
-					return (0, _react.createElement)(Input, _extends({}, props, {
-						defaultValue: defaultValue,
-						ref: this.receiveInput,
-						onFocus: this.handleFocus,
-						onBlur: this.handleBlur
-					}));
-				}
+      this.input = null;
+      this.isFocused = false;
 
-				/**
-     * {@inheritDoc}
-     */
+      this.receiveInput = function (input) {
+        _this2.input = input;
+        sendElementToRef(_this2.props.inputRef, input);
+      };
 
-			}, {
-				key: 'componentDidUpdate',
-				value: function componentDidUpdate(prevProps) {
-					// No value change from a parent when a user interacts with the input!
-					if (this.isFocused) {
-						return;
-					}
+      this.handleFocus = function () {
+        _this2.isFocused = true;
 
-					if (prevProps.value !== this.props.value && this.props.value !== undefined) {
-						this.forceValue(this.props.value);
-					}
+        if (isFunction(_this2.props.onFocus)) {
+          var _props2;
 
-					// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
-					if (prevProps.inputRef !== this.props.inputRef) {
-						sendElementToRef(prevProps.inputRef, null);
-						sendElementToRef(this.props.inputRef, this.input);
-					}
-				}
-			}, {
-				key: 'value',
-				get: function get() {
-					return this.input ? this.input.value : undefined;
-				}
+          (_props2 = _this2.props).onFocus.apply(_props2, arguments);
+        }
+      };
 
-				/**
-     * Setter for the `value` property
-     *
-     * @param {*} value A new value
-     */
+      this.handleBlur = function () {
+        _this2.isFocused = false;
 
-				, set: function set(value) {
-					if (!this.isFocused) {
-						this.forceValue(value);
-					}
-				}
-			}]);
+        if (isFunction(_this2.props.onBlur)) {
+          var _props3;
 
-			return _class;
-		}(_react.Component), _class.displayName = 'palInput(' + name + ')', _temp;
-	}
+          (_props3 = _this2.props).onBlur.apply(_props3, arguments);
+        }
 
-	/**
-  * Friendly <input> React component
-  * @see palInput What is "friendly"
-  * @type {Function}
-  */
-	var Input = exports.Input = palInput('input');
+        // If the input is controlled (has the value property), resets the native input value to the props value
+        if (_this2.props.value !== undefined) {
+          _this2.forceValue(_this2.props.value);
+        }
+      };
+    }, _temp2;
+  }
 
-	/**
-  * Friendly <textarea> React component
-  * @see palInput What is "friendly"
-  * @type {Function}
-  */
-	var TextArea = exports.TextArea = palInput('textarea');
+  /**
+   * Friendly <input> React component
+   * @see palInput What is "friendly"
+   * @type {Function}
+   */
+  var Input = exports.Input = palInput('input');
 
-	/**
-  * Friendly <select> React component
-  * @see palInput What is "friendly"
-  * @type {Function}
-  */
-	var Select = exports.Select = palInput('select');
+  /**
+   * Friendly <textarea> React component
+   * @see palInput What is "friendly"
+   * @type {Function}
+   */
+  var TextArea = exports.TextArea = palInput('textarea');
 
-	/**
-  * Checks whether the value is a function
-  *
-  * @param {*} value
-  * @return {boolean}
-  */
-	function isFunction(value) {
-		return typeof value === 'function';
-	}
+  /**
+   * Friendly <select> React component
+   * @see palInput What is "friendly"
+   * @type {Function}
+   */
+  var Select = exports.Select = palInput('select');
 
-	/**
-  * Sends an element to a ref prop value.
-  *
-  * @param {*} ref The ref value. It can be empty (no ref).
-  * @param {HTMLElement|React.Element|null} element The element to send
-  * @see https://reactjs.org/docs/refs-and-the-dom.html Ref documentation
-  */
-	function sendElementToRef(ref, element) {
-		if (isFunction(ref)) {
-			ref(element);
-		} else if (ref && (typeof ref === 'undefined' ? 'undefined' : _typeof(ref)) === 'object' && ref.hasOwnProperty('current')) {
-			ref.current = element;
-		}
-	}
+  /**
+   * Checks whether the value is a function
+   *
+   * @param {*} value
+   * @return {boolean}
+   */
+  function isFunction(value) {
+    return typeof value === 'function';
+  }
+
+  /**
+   * Sends an element to a ref prop value.
+   *
+   * @param {*} ref The ref value. It can be empty (no ref).
+   * @param {HTMLElement|React.Element|null} element The element to send
+   * @see https://reactjs.org/docs/refs-and-the-dom.html Ref documentation
+   */
+  function sendElementToRef(ref, element) {
+    if (isFunction(ref)) {
+      ref(element);
+    } else if (ref && (typeof ref === 'undefined' ? 'undefined' : _typeof(ref)) === 'object' && ref.hasOwnProperty('current')) {
+      ref.current = element;
+    }
+  }
 });

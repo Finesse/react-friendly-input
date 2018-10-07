@@ -32,23 +32,22 @@ with a space and must be not more than 10 characters long. The user is typing `Â
 <td>
 
 ```jsx
-class App extends React.Component
-{
+class App extends React.Component {
   state = {
     name: ''
-  }
+  };
   
-  setName(event) {
+  setName = event => {
     this.setState({
       name: event.target.value
         .trim().slice(0, 10)
     });
-  }
+  };
   
   render() {
     return <input
       value={this.state.name}
-      onInput={this.setName.bind(this)}
+      onChange={this.setName}
     />;
   }
 }
@@ -60,23 +59,22 @@ ReactDOM.render(<App/>, document.body);
 <td>
 
 ```jsx
-class App extends React.Component
-{
+class App extends React.Component {
   state = {
     name: ''
-  }
+  };
   
-  setName(event) {
+  setName = event => {
     this.setState({
       name: event.target.value
         .trim().slice(0, 10)
     });
-  }
+  };
   
   render() {
     return <reactFriendlyInput.Input
       value={this.state.name}
-      onInput={this.setName.bind(this)}
+      onChange={this.setName}
     />;
   }
 }
@@ -122,10 +120,10 @@ Installation:
 
 ```js
 require.config({
-    paths: {
-        react: '//cdn.jsdelivr.net/npm/react@16.3.2/umd/react.production.min',
-        'react-friendly-input': '//cdn.jsdelivr.net/npm/react-friendly-input@0.1.2/dist/react-friendly-input.umd.min'
-    }
+  paths: {
+    react: '//cdn.jsdelivr.net/npm/react@16.3.2/umd/react.production.min',
+    'react-friendly-input': '//cdn.jsdelivr.net/npm/react-friendly-input@0.1.2/dist/react-friendly-input.umd.min'
+  }
 });
 
 define('myModule', ['react-friendly-input'], function (reactFriendlyInput) {
@@ -159,15 +157,15 @@ The components are rendered like the plain React form fields. All the props are 
 const {Input, TextArea, Select} = reactFriendlyInput;
 
 ReactDOM.render(
-    <div>
-        <Input type="text" value="some value" />
-        <TextArea value="big text" rows="4" />
-        <Select value="1">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        <Select>
-    </div>,
-    document.body
+  <div>
+    <Input type="text" value="some value" />
+    <TextArea value="big text" rows="4" />
+    <Select value="1">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    <Select>
+  </div>,
+  document.body
 );
 ```
 
@@ -212,9 +210,8 @@ friendly:
 ```js
 const {palInput} = reactFriendlyInput;
 
-class CustomField extends React.Component
-{
-    // ...
+class CustomField extends React.Component {
+  // ...
 }
 
 const FriendlyCustomField = palInput(CustomField);

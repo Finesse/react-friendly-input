@@ -8,169 +8,147 @@ import {Component, createElement} from 'react';
  * element of the given component, use the `inputRef` prop like you would use the `ref` prop.
  *
  * @param {Function|string} Input The input React component. It is not modified. It can be either a HTML element (input,
- *     textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
+ *   textarea, select) or another component which behaves the same way (has the value property and focus/blur events).
  * @return {Function} The friendly React component
  */
-export function palInput(Input)
-{
-	const name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
+export function palInput(Input) {
+  const name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
 
-	return class extends Component
-	{
-		/**
-		 * {@inheritDoc}
-		 */
-		static displayName = `palInput(${name})`;
+  return class extends Component {
+    /**
+     * {@inheritDoc}
+     */
+    static displayName = `palInput(${name})`;
 
-		/**
-		 * The underlying controlled input
-		 * @public
-		 * @readonly
-		 * @type {HTMLElement|React.Element|null}
-		 */
-		input = null;
+    /**
+     * The underlying controlled input
+     * @public
+     * @readonly
+     * @type {HTMLElement|React.Element|null}
+     */
+    input = null;
 
-		/**
-		 * Is the input focused
-		 * @protected
-		 * @type {boolean}
-		 */
-		isFocused = false;
+    /**
+     * Is the input focused
+     * @protected
+     * @type {boolean}
+     */
+    isFocused = false;
 
-		/**
-		 * {@inheritDoc}
-		 */
-		constructor(props)
-		{
-			super(props);
+    /**
+     * Getter for the `value` property
+     *
+     * @return {*|undefined}
+     */
+    get value() {
+      return this.input ? this.input.value : undefined;
+    }
 
-			this.receiveInput = this.receiveInput.bind(this);
-			this.handleFocus = this.handleFocus.bind(this);
-			this.handleBlur = this.handleBlur.bind(this);
-		}
+    /**
+     * Setter for the `value` property
+     *
+     * @param {*} value A new value
+     */
+    set value(value) {
+      if (!this.isFocused) {
+        this.forceValue(value);
+      }
+    }
 
-		/**
-		 * Getter for the `value` property
-		 *
-		 * @return {*|undefined}
-		 */
-		get value()
-		{
-			return this.input ? this.input.value : undefined;
-		}
+    /**
+     * Sets a new value despite whether the input is focused or not
+     *
+     * @param {*} value A new value
+     */
+    forceValue(value) {
+      if (this.input) {
+        this.input.value = value;
+      }
+    }
 
-		/**
-		 * Setter for the `value` property
-		 *
-		 * @param {*} value A new value
-		 */
-		set value(value)
-		{
-			if (!this.isFocused) {
-				this.forceValue(value);
-			}
-		}
+    /**
+     * Handles an underlying input reference from React.
+     *
+     * @protected
+     * @param {HTMLElement|null} input
+     */
+    receiveInput = input => {
+      this.input = input;
+      sendElementToRef(this.props.inputRef, input);
+    };
 
-		/**
-		 * Sets a new value despite whether the input is focused or not
-		 *
-		 * @param {*} value A new value
-		 */
-		forceValue(value)
-		{
-			if (this.input) {
-				this.input.value = value;
-			}
-		}
+    /**
+     * Handles a native input `focus` event
+     *
+     * @protected
+     * @param {*[]} args
+     */
+    handleFocus = (...args) => {
+      this.isFocused = true;
 
-		/**
-		 * Handles an underlying input reference from React.
-		 *
-		 * @protected
-		 * @param {HTMLElement|null} input
-		 */
-		receiveInput(input)
-		{
-			this.input = input;
-			sendElementToRef(this.props.inputRef, input);
-		}
+      if (isFunction(this.props.onFocus)) {
+        this.props.onFocus(...args);
+      }
+    };
 
-		/**
-		 * Handles a native input `focus` event
-		 *
-		 * @protected
-		 * @param {*[]} args
-		 */
-		handleFocus(...args)
-		{
-			this.isFocused = true;
+    /**
+     * Handles a native input `blur` event
+     *
+     * @protected
+     * @param {*[]} args
+     */
+    handleBlur = (...args) => {
+      this.isFocused = false;
 
-			if (isFunction(this.props.onFocus)) {
-				this.props.onFocus(...args);
-			}
-		}
+      if (isFunction(this.props.onBlur)) {
+        this.props.onBlur(...args);
+      }
 
-		/**
-		 * Handles a native input `blur` event
-		 *
-		 * @protected
-		 * @param {*[]} args
-		 */
-		handleBlur(...args)
-		{
-			this.isFocused = false;
+      // If the input is controlled (has the value property), resets the native input value to the props value
+      if (this.props.value !== undefined) {
+        this.forceValue(this.props.value);
+      }
+    };
 
-			if (isFunction(this.props.onBlur)) {
-				this.props.onBlur(...args);
-			}
+    /**
+     * {@inheritDoc}
+     */
+    render() {
+      let {value, defaultValue, inputRef, ...props} = this.props;
 
-			// If the input is controlled (has the value property), resets the native input value to the props value
-			if (this.props.value !== undefined) {
-				this.forceValue(this.props.value);
-			}
-		}
+      if (value !== undefined) {
+        defaultValue = value;
+      }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		render()
-		{
-			let {value, defaultValue, inputRef, ...props} = this.props;
+      return createElement(Input, {
+        ...props,
+        defaultValue,
+        ref: this.receiveInput,
+        onFocus: this.handleFocus,
+        onBlur: this.handleBlur
+      });
+    }
 
-			if (value !== undefined) {
-				defaultValue = value;
-			}
+    /**
+     * {@inheritDoc}
+     */
+    componentDidUpdate(prevProps) {
+      // No value change from a parent when a user interacts with the input!
+      if (this.isFocused) {
+        return;
+      }
 
-			return createElement(Input, {
-				...props,
-				defaultValue,
-				ref: this.receiveInput,
-				onFocus: this.handleFocus,
-				onBlur: this.handleBlur
-			});
-		}
+      if (prevProps.value !== this.props.value && this.props.value !== undefined) {
+        this.forceValue(this.props.value);
+      }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		componentDidUpdate(prevProps)
-		{
-			// No value change from a parent when a user interacts with the input!
-			if (this.isFocused) {
-				return;
-			}
-
-			if (prevProps.value !== this.props.value && this.props.value !== undefined) {
-				this.forceValue(this.props.value);
-			}
-
-			// React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
-			if (prevProps.inputRef !== this.props.inputRef) {
-				sendElementToRef(prevProps.inputRef, null);
-				sendElementToRef(this.props.inputRef, this.input);
-			}
-		}
-	};
+      // React doesn't call the ref function when the `inputRef` prop is changed so we have to handle it manually
+      if (prevProps.inputRef !== this.props.inputRef) {
+        sendElementToRef(prevProps.inputRef, null);
+        sendElementToRef(this.props.inputRef, this.input);
+      }
+    }
+  };
 }
 
 /**
@@ -200,9 +178,8 @@ export const Select = palInput('select');
  * @param {*} value
  * @return {boolean}
  */
-function isFunction(value)
-{
-	return typeof value === 'function';
+function isFunction(value) {
+  return typeof value === 'function';
 }
 
 /**
@@ -212,11 +189,10 @@ function isFunction(value)
  * @param {HTMLElement|React.Element|null} element The element to send
  * @see https://reactjs.org/docs/refs-and-the-dom.html Ref documentation
  */
-function sendElementToRef(ref, element)
-{
-	if (isFunction(ref)) {
-		ref(element);
-	} else if (ref && typeof ref === 'object' && ref.hasOwnProperty('current')) {
-		ref.current = element;
-	}
+function sendElementToRef(ref, element) {
+  if (isFunction(ref)) {
+    ref(element);
+  } else if (ref && typeof ref === 'object' && ref.hasOwnProperty('current')) {
+    ref.current = element;
+  }
 }
