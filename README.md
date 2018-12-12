@@ -2,7 +2,6 @@
 
 [![npm](https://img.shields.io/npm/v/react-friendly-input.svg)](https://www.npmjs.com/package/react-friendly-input)
 ![Supported React versions](https://img.shields.io/badge/React-v0.14,_v15,_v16-brightgreen.svg)
-[![Build Status](https://travis-ci.org/Finesse/react-friendly-input.svg?branch=master)](https://travis-ci.org/Finesse/react-friendly-input)
 [![Gzip size](http://img.badgesize.io/http://cdn.jsdelivr.net/npm/react-friendly-input/dist/react-friendly-input.umd.min.js?compression=gzip)](http://cdn.jsdelivr.net/npm/react-friendly-input/dist/react-friendly-input.umd.min.js)
 
 This is a set of [React](https://reactjs.org) form field components which don't change their value programmatically 
@@ -88,6 +87,14 @@ ReactDOM.render(<App/>, document.body);
 </table>
 
 [Live demo](https://codepen.io/TheFinesse/pen/XqRVRL?editors=0010)
+
+
+## Status
+
+[![Build Status](https://travis-ci.org/Finesse/react-friendly-input.svg?branch=master)](https://travis-ci.org/Finesse/react-friendly-input)
+[![dependencies Status](https://david-dm.org/Finesse/react-friendly-input/status.svg)](https://david-dm.org/Finesse/react-friendly-input)
+[![devDependencies Status](https://david-dm.org/Finesse/react-friendly-input/dev-status.svg)](https://david-dm.org/Finesse/react-friendly-input?type=dev)
+[![peerDependencies Status](https://david-dm.org/Finesse/react-friendly-input/peer-status.svg)](https://david-dm.org/Finesse/react-friendly-input?type=peer)
 
 
 ## Installation
