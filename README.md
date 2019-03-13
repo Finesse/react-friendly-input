@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/react-friendly-input.svg)](https://www.npmjs.com/package/react-friendly-input)
 ![Supported React versions](https://img.shields.io/badge/React-v0.14,_v15,_v16-brightgreen.svg)
-[![Gzip size](https://badgen.net/bundlephobia/minzip/react-friendly-input)](https://bundlephobia.com/result?p=react-friendly-input)
+[![Gzip size](https://badgen.net/bundlephobia/minzip/react-friendly-input?color=green)](https://bundlephobia.com/result?p=react-friendly-input)
 
 This is a set of [React](https://reactjs.org) form field components which don't change their value programmatically 
 when focused. It helps to build controlled inputs that don't annoy users.
