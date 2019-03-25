@@ -1,6 +1,6 @@
 /**
  * React Friendly Input v0.1.3 (https://github.com/Finesse/react-friendly-input)
- * Copyright 2018 Surgie Finesse
+ * Copyright 2018-2019 Surgie Finesse
  * Licensed under the MIT license
  */
 "use strict";
@@ -27,9 +27,9 @@ var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime
 
 var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -67,13 +67,13 @@ function palInput(Input) {
       }
 
       _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(_class)).call.apply(_getPrototypeOf2, [this].concat(_args)));
-      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "input", null);
-      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "isFocused", false);
-      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "receiveInput", function (input) {
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "input", null);
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "isFocused", false);
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "receiveInput", function (input) {
         _this.input = input;
         sendElementToRef(_this.props.inputRef, input);
       });
-      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "handleFocus", function () {
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleFocus", function () {
         _this.isFocused = true;
 
         if (isFunction(_this.props.onFocus)) {
@@ -82,7 +82,7 @@ function palInput(Input) {
           (_this$props = _this.props).onFocus.apply(_this$props, arguments);
         }
       });
-      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "handleBlur", function () {
+      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleBlur", function () {
         _this.isFocused = false;
 
         if (isFunction(_this.props.onBlur)) {

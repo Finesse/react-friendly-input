@@ -1,6 +1,6 @@
 /**
  * React Friendly Input v0.1.3 (https://github.com/Finesse/react-friendly-input)
- * Copyright 2018 Surgie Finesse
+ * Copyright 2018-2019 Surgie Finesse
  * Licensed under the MIT license
  */
 import _typeof from "@babel/runtime/helpers/typeof";
@@ -10,8 +10,8 @@ import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
 import _createClass from "@babel/runtime/helpers/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
-import _inherits from "@babel/runtime/helpers/inherits";
 import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
+import _inherits from "@babel/runtime/helpers/inherits";
 import _defineProperty from "@babel/runtime/helpers/defineProperty";
 import { Component, createElement } from 'react';
 /**
@@ -48,16 +48,16 @@ export function palInput(Input) {
 
       _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(_class)).call.apply(_getPrototypeOf2, [this].concat(_args)));
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "input", null);
+      _defineProperty(_assertThisInitialized(_this), "input", null);
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "isFocused", false);
+      _defineProperty(_assertThisInitialized(_this), "isFocused", false);
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "receiveInput", function (input) {
+      _defineProperty(_assertThisInitialized(_this), "receiveInput", function (input) {
         _this.input = input;
         sendElementToRef(_this.props.inputRef, input);
       });
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleFocus", function () {
+      _defineProperty(_assertThisInitialized(_this), "handleFocus", function () {
         _this.isFocused = true;
 
         if (isFunction(_this.props.onFocus)) {
@@ -67,7 +67,7 @@ export function palInput(Input) {
         }
       });
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleBlur", function () {
+      _defineProperty(_assertThisInitialized(_this), "handleBlur", function () {
         _this.isFocused = false;
 
         if (isFunction(_this.props.onBlur)) {

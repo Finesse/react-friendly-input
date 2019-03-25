@@ -1,6 +1,6 @@
 /**
  * React Friendly Input v0.1.3 (https://github.com/Finesse/react-friendly-input)
- * Copyright 2018 Surgie Finesse
+ * Copyright 2018-2019 Surgie Finesse
  * Licensed under the MIT license
  */
 (function (global, factory) {
@@ -42,11 +42,11 @@
 
   function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
   function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
   function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -83,16 +83,16 @@
 
         _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(_class)).call.apply(_getPrototypeOf2, [this].concat(_args)));
 
-        _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "input", null);
+        _defineProperty(_assertThisInitialized(_this), "input", null);
 
-        _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "isFocused", false);
+        _defineProperty(_assertThisInitialized(_this), "isFocused", false);
 
-        _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "receiveInput", function (input) {
+        _defineProperty(_assertThisInitialized(_this), "receiveInput", function (input) {
           _this.input = input;
           sendElementToRef(_this.props.inputRef, input);
         });
 
-        _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleFocus", function () {
+        _defineProperty(_assertThisInitialized(_this), "handleFocus", function () {
           _this.isFocused = true;
 
           if (isFunction(_this.props.onFocus)) {
@@ -102,7 +102,7 @@
           }
         });
 
-        _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleBlur", function () {
+        _defineProperty(_assertThisInitialized(_this), "handleBlur", function () {
           _this.isFocused = false;
 
           if (isFunction(_this.props.onBlur)) {
