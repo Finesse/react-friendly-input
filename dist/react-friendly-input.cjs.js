@@ -1,5 +1,5 @@
 /**
- * React Friendly Input v0.1.3 (https://github.com/Finesse/react-friendly-input)
+ * React Friendly Input v0.1.4 (https://github.com/Finesse/react-friendly-input)
  * Copyright 2018-2020 Surgie Finesse
  * Licensed under the MIT license
  */
