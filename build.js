@@ -2,7 +2,7 @@ const {writeFile} = require('fs');
 const {promisify} = require('util');
 const babel = require('@babel/core');
 const terser = require('terser');
-const {version, author, homepage} = require('./package.json');
+const {version, author, homepage, dependencies} = require('./package.json');
 
 const writeFileAsync = promisify(writeFile);
 
@@ -35,7 +35,9 @@ async function buildForNode() {
     ],
     plugins: [
       ...babelPlugins,
-      '@babel/plugin-transform-runtime'
+      ['@babel/plugin-transform-runtime', {
+        version: dependencies["@babel/runtime"]
+      }]
     ]
   });
   await writeFileAsync('./dist/react-friendly-input.es.js', copyrightNotice + code);
@@ -71,7 +73,7 @@ async function buildForBrowser() {
   console.log('`dist/react-friendly-input.umd.js` has been built');
 
   // Building the minified UMD code
-  code = terser.minify(code).code;
+  code = (await terser.minify(code)).code;
   await writeFileAsync('./dist/react-friendly-input.umd.min.js', copyrightNotice + code);
   console.log('`dist/react-friendly-input.umd.min.js` has been built');
 }

@@ -1,6 +1,6 @@
 /**
  * React Friendly Input v0.1.3 (https://github.com/Finesse/react-friendly-input)
- * Copyright 2018-2019 Surgie Finesse
+ * Copyright 2018-2020 Surgie Finesse
  * Licensed under the MIT license
  */
 "use strict";
@@ -15,7 +15,7 @@ exports.Select = exports.TextArea = exports.Input = void 0;
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
 
-var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2"));
 
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 
@@ -23,13 +23,11 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _createSuper2 = _interopRequireDefault(require("@babel/runtime/helpers/createSuper"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
@@ -50,14 +48,12 @@ function palInput(Input) {
   var _class, _temp;
 
   var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
-  return _temp = _class =
-  /*#__PURE__*/
-  function (_Component) {
+  return _temp = _class = /*#__PURE__*/function (_Component) {
     (0, _inherits2.default)(_class, _Component);
 
-    function _class() {
-      var _getPrototypeOf2;
+    var _super = (0, _createSuper2.default)(_class);
 
+    function _class() {
       var _this;
 
       (0, _classCallCheck2.default)(this, _class);
@@ -66,7 +62,7 @@ function palInput(Input) {
         _args[_key] = arguments[_key];
       }
 
-      _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(_class)).call.apply(_getPrototypeOf2, [this].concat(_args)));
+      _this = _super.call.apply(_super, [this].concat(_args));
       (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "input", null);
       (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "isFocused", false);
       (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "receiveInput", function (input) {
@@ -136,7 +132,7 @@ function palInput(Input) {
           defaultValue = value;
         }
 
-        return (0, _react.createElement)(Input, (0, _objectSpread2.default)({}, props, {
+        return (0, _react.createElement)(Input, (0, _objectSpread2.default)((0, _objectSpread2.default)({}, props), {}, {
           defaultValue: defaultValue,
           ref: this.receiveInput,
           onFocus: this.handleFocus,

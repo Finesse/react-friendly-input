@@ -17,11 +17,15 @@ describe('Tests reactFriendlyInput', () => {
       reactUrl: 'https://cdn.jsdelivr.net/npm/react@16.0.0/umd/react.production.min.js',
       reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@16.0.0/umd/react-dom.production.min.js'
     },
-    '16 latest': {
-      reactUrl: 'https://cdn.jsdelivr.net/npm/react@16/umd/react.production.min.js',
-      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.production.min.js'
+    '17': {
+      reactUrl: 'https://cdn.jsdelivr.net/npm/react@17.0.0/umd/react.production.min.js',
+      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@17.0.0/umd/react-dom.production.min.js'
+    },
+    '17 latest': {
+      reactUrl: 'https://cdn.jsdelivr.net/npm/react@17/umd/react.production.min.js',
+      reactDomUrl: 'https://cdn.jsdelivr.net/npm/react-dom@17/umd/react-dom.production.min.js'
     }
-    // When React 17 is released: `16 latest` should be removed and `17` with `17 latest` should be added
+    // When React 18 is released: `17 latest` should be removed and `18` with `18 latest` should be added
   };
 
   const reactFriendlyInputCode = readFileSync(`${__dirname}/../dist/react-friendly-input.umd.js`);

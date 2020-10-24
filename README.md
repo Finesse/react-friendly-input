@@ -1,7 +1,7 @@
 # React Friendly Input
 
 [![npm](https://img.shields.io/npm/v/react-friendly-input.svg)](https://www.npmjs.com/package/react-friendly-input)
-![Supported React versions](https://img.shields.io/badge/React-v0.14,_v15,_v16-brightgreen.svg)
+![Supported React versions](https://img.shields.io/badge/React-v0.14,_v15,_v16,_v17-brightgreen.svg)
 [![Gzip size](https://badgen.net/bundlephobia/minzip/react-friendly-input?color=green)](https://bundlephobia.com/result?p=react-friendly-input)
 
 This is a set of [React](https://reactjs.org) form field components which don't change their value programmatically 
@@ -109,7 +109,7 @@ import.
 
 ```html
 <!-- React -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/react@16.3.2/umd/react.production.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/react@17.0.1/umd/react.production.min.js"></script>
 
 <!-- React Friendly Input -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/react-friendly-input@0.1.3/dist/react-friendly-input.umd.min.js"></script>
@@ -128,7 +128,7 @@ Installation:
 ```js
 require.config({
   paths: {
-    react: '//cdn.jsdelivr.net/npm/react@16.3.2/umd/react.production.min',
+    react: '//cdn.jsdelivr.net/npm/react@17.0.1/umd/react.production.min',
     'react-friendly-input': '//cdn.jsdelivr.net/npm/react-friendly-input@0.1.3/dist/react-friendly-input.umd.min'
   }
 });

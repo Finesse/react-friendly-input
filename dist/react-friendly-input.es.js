@@ -1,17 +1,16 @@
 /**
  * React Friendly Input v0.1.3 (https://github.com/Finesse/react-friendly-input)
- * Copyright 2018-2019 Surgie Finesse
+ * Copyright 2018-2020 Surgie Finesse
  * Licensed under the MIT license
  */
 import _typeof from "@babel/runtime/helpers/typeof";
-import _objectSpread from "@babel/runtime/helpers/objectSpread";
+import _objectSpread from "@babel/runtime/helpers/objectSpread2";
 import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
 import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
 import _createClass from "@babel/runtime/helpers/createClass";
-import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
 import _inherits from "@babel/runtime/helpers/inherits";
+import _createSuper from "@babel/runtime/helpers/createSuper";
 import _defineProperty from "@babel/runtime/helpers/defineProperty";
 import { Component, createElement } from 'react';
 /**
@@ -30,14 +29,12 @@ export function palInput(Input) {
   var _class, _temp;
 
   var name = (isFunction(Input) ? Input.displayName || Input.name : null) || Input;
-  return _temp = _class =
-  /*#__PURE__*/
-  function (_Component) {
+  return _temp = _class = /*#__PURE__*/function (_Component) {
     _inherits(_class, _Component);
 
-    function _class() {
-      var _getPrototypeOf2;
+    var _super = _createSuper(_class);
 
+    function _class() {
       var _this;
 
       _classCallCheck(this, _class);
@@ -46,7 +43,7 @@ export function palInput(Input) {
         _args[_key] = arguments[_key];
       }
 
-      _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(_class)).call.apply(_getPrototypeOf2, [this].concat(_args)));
+      _this = _super.call.apply(_super, [this].concat(_args));
 
       _defineProperty(_assertThisInitialized(_this), "input", null);
 
@@ -122,7 +119,7 @@ export function palInput(Input) {
           defaultValue = value;
         }
 
-        return createElement(Input, _objectSpread({}, props, {
+        return createElement(Input, _objectSpread(_objectSpread({}, props), {}, {
           defaultValue: defaultValue,
           ref: this.receiveInput,
           onFocus: this.handleFocus,
